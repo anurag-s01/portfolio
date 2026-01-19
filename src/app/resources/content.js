@@ -1,19 +1,20 @@
 import { InlineCode } from "@/once-ui/components";
 
 const person = {
-    firstName: 'Selene',
-    lastName:  'Yu',
+    firstName: 'Anurag',
+    lastName: 'Singh',
     get name() {
         return `${this.firstName} ${this.lastName}`;
     },
-    role:      'Design Engineer',
-    avatar:    '/images/avatar.jpg',
-    location:  'Asia/Jakarta',        // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-    languages: ['English', 'Bahasa']  // optional: Leave the array empty if you don't want to display languages
+    role: 'Senior Software Engineer',
+    avatar: '/images/avatar.jpg',
+    location: 'Asia/Kolkata',        // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+    residence: 'India',
+    languages: []  // optional: Leave the array empty if you don't want to display languages
 }
 
 const newsletter = {
-    display: true,
+    display: false,
     title: <>Subscribe to {person.firstName}'s Newsletter</>,
     description: <>I occasionally write about design, technology, and share thoughts on the intersection of creativity and engineering.</>
 }
@@ -24,22 +25,22 @@ const social = [
     {
         name: 'GitHub',
         icon: 'github',
-        link: 'https://github.com/once-ui-system/nextjs-starter',
+        link: 'https://github.com/anurag-s01',
     },
     {
         name: 'LinkedIn',
         icon: 'linkedin',
-        link: 'https://www.linkedin.com/company/once-ui/',
+        link: 'https://www.linkedin.com/in/anurag-s01/',
     },
     {
-        name: 'X',
-        icon: 'x',
-        link: '',
+        name: 'Stack Overflow',
+        icon: 'stackOverflow',
+        link: 'https://stackoverflow.com/users/21785880/anurator',
     },
     {
         name: 'Email',
         icon: 'email',
-        link: 'mailto:example@gmail.com',
+        link: 'mailto:mail.anurags01@gmail.com',
     },
 ]
 
@@ -47,8 +48,8 @@ const home = {
     label: 'Home',
     title: `${person.name}'s Portfolio`,
     description: `Portfolio website showcasing my work as a ${person.role}`,
-    headline: <>Design engineer and builder</>,
-    subline: <>I'm Selene, a design engineer at <InlineCode>FLY</InlineCode>, where I craft intuitive<br/> user experiences. After hours, I build my own projects.</>
+    headline: <>Software engineer and builder</>,
+    subline: <>I'm Anurag, a Senior Software Engineer at <InlineCode>Jubilant FoodWorks</InlineCode> with a focus on building scalable, high-performance systems.<br /> Outside of work, I stay engaged with new technologies and explore ways to innovate and improve software development processes.</>
 }
 
 const about = {
@@ -63,58 +64,69 @@ const about = {
         display: true
     },
     calendar: {
-        display: true,
+        display: false,
         link: 'https://cal.com'
     },
     intro: {
         display: true,
         title: 'Introduction',
-        description: <>Selene is a Jakarta-based design engineer with a passion for transforming complex challenges into simple, elegant design solutions. Her work spans digital interfaces, interactive experiences, and the convergence of design and technology.</>
+        description: <>Anurag is a India-based software engineer with a passion for delivering robust, scalable systems that address real-world challenges. His work combines technical expertise with a strong problem-solving approach to create high-impact software that drives business success.</>
     },
     work: {
         display: true, // set to false to hide this section
         title: 'Work Experience',
         experiences: [
             {
-                company: 'FLY',
-                timeframe: '2022 - Present',
-                role: 'Senior Design Engineer',
+                company: 'Jubilant FoodWorks Ltd.',
+                timeframe: 'Aug 2025 - Present',
+                role: 'Senior Software Engineer',
                 achievements: [
-                    <>Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user engagement and 30% faster load times.</>,
-                    <>Spearheaded the integration of AI tools into design workflows, enabling designers to iterate 50% faster.</>
+                    <>Driving end-to-end backend development for Corporate Orders, transforming a fully offline process into a seamless online experience.</>,
+                    <>Building order flow integrations for Razorpay and VIPL eVoucher partners for Domino’s, expanding market reach.</>
                 ],
-                images: [ // optional: leave the array empty if you don't want to display images
-                    {
-                        src: '/images/projects/project-01/cover-01.jpg',
-                        alt: 'Once UI Project',
-                        width: 16,
-                        height: 9
-                    }
-                ]
+                images: []
             },
             {
-                company: 'Creativ3',
-                timeframe: '2018 - 2022',
-                role: 'Lead Designer',
+                company: 'Jubilant FoodWorks Ltd.',
+                timeframe: 'July 2023 - July 2025',
+                role: 'Software Engineer',
                 achievements: [
-                    <>Developed a design system that unified the brand across multiple platforms, improving design consistency by 40%.</>,
-                    <>Led a cross-functional team to launch a new product line, contributing to a 15% increase in overall company revenue.</>
+                    <>Engineered an in-house scalable, event-driven multi-tenant Notification Platform using Kafka and Spring Boot, handling millions of requests/day.</>,
+                    <>Spearheaded backend integration between Domino’s and Zomato IRCTC Train Orders using a dynamic template-based architecture.</>,
+                    <>Achieved 79% latency reduction in MongoDB query execution and 91% improvement in request handling overhead.</>,
+                    <>Delivered Flat Price Menu feature contributing to up to 49% uplift in campaign-driven conversions.</>
                 ],
-                images: [ ]
+                images: []
+            },
+            {
+                company: 'Jubilant FoodWorks',
+                timeframe: 'Jan 2023 - Jun 2023',
+                role: 'Graduate Engineering Trainee',
+                achievements: [
+                    <>Contributed to core service reliability by Java & Spring-boot version upgrade and implementing circuit-breakers using Resilience4j.</>,
+                    <>Strengthened application security by remediating exploit vectors & third-party vulnerable libraries using OWASP dependency-check.</>
+                ],
+                images: []
+            },
+            {
+                company: 'Standard Chartered',
+                timeframe: 'May 2022 - July 2022',
+                role: 'Technology Intern',
+                achievements: [
+                    <>Built a custom in-house JSON validator using Java for processing corporate payment files with details validation failure reporting.</>,
+                    <>Implemented web interface using React.js for corporate payment files validator.</>
+                ],
+                images: []
             }
         ]
     },
     studies: {
         display: true, // set to false to hide this section
-        title: 'Studies',
+        title: 'Education',
         institutions: [
             {
-                name: 'University of Jakarta',
-                description: <>Studied software engineering.</>,
-            },
-            {
-                name: 'Build the Future',
-                description: <>Studied online marketing and personal branding.</>,
+                name: 'National Institue of Technology, Jamshedpur',
+                description: <>Studied Computer Science & Engineering.</>,
             }
         ]
     },
@@ -122,36 +134,16 @@ const about = {
         display: true, // set to false to hide this section
         title: 'Technical skills',
         skills: [
-            {
-                title: 'Figma',
-                description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
-                images: [
-                    {
-                        src: '/images/projects/project-01/cover-02.jpg',
-                        alt: 'Project image',
-                        width: 16,
-                        height: 9
-                    },
-                    {
-                        src: '/images/projects/project-01/cover-03.jpg',
-                        alt: 'Project image',
-                        width: 16,
-                        height: 9
-                    },
-                ]
-            },
-            {
-                title: 'Next.js',
-                description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
-                images: [
-                    {
-                        src: '/images/projects/project-01/cover-04.jpg',
-                        alt: 'Project image',
-                        width: 16,
-                        height: 9
-                    },
-                ]
-            }
+            { title: "Java", icon: 'java' },
+            { title: "C++", icon: 'cpp' },
+            { title: "Spring Boot", icon: 'springboot' },
+            { title: "Apache Kafka", icon: 'apacheKafka' },
+            { title: "MySQL", icon: "mysql" },
+            { title: "MongoDB", icon: "mongoDB" },
+            { title: "Aerospike", icon: "aerospike" },
+            { title: "AWS", icon: "aws" },
+            { title: "Docker", icon: "docker" },
+            { title: "Git", icon: "git" }
         ]
     }
 }
@@ -178,75 +170,110 @@ const gallery = {
     description: `A photo collection by ${person.name}`,
     // Images from https://pexels.com
     images: [
-        { 
-            src: '/images/gallery/img-01.jpg', 
+        {
+            src: '/images/gallery/img-01.jpg',
             alt: 'image',
-            orientation: 'vertical'
+            orientation: 'vertical',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-02.jpg', 
+        {
+            src: '/images/gallery/img-02.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-03.jpg', 
+        {
+            src: '/images/gallery/img-03.jpg',
             alt: 'image',
-            orientation: 'vertical'
+            orientation: 'vertical',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-04.jpg', 
+        {
+            src: '/images/gallery/img-04.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 3024,
+            height: 4032
         },
-        { 
-            src: '/images/gallery/img-05.jpg', 
+        {
+            src: '/images/gallery/img-05.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-06.jpg', 
+        {
+            src: '/images/gallery/img-06.jpg',
             alt: 'image',
-            orientation: 'vertical'
+            orientation: 'vertical',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-07.jpg', 
+        {
+            src: '/images/gallery/img-07.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 3024,
+            height: 4032
         },
-        { 
-            src: '/images/gallery/img-08.jpg', 
+        {
+            src: '/images/gallery/img-08.jpg',
             alt: 'image',
-            orientation: 'vertical'
+            orientation: 'vertical',
+            width: 2677,
+            height: 2008
         },
-        { 
-            src: '/images/gallery/img-09.jpg', 
+        {
+            src: '/images/gallery/img-09.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 3037,
+            height: 2099
         },
-        { 
-            src: '/images/gallery/img-10.jpg', 
+        {
+            src: '/images/gallery/img-10.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-11.jpg', 
+        {
+            src: '/images/gallery/img-11.jpg',
             alt: 'image',
-            orientation: 'vertical'
+            orientation: 'vertical',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-12.jpg', 
+        {
+            src: '/images/gallery/img-12.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-13.jpg', 
+        {
+            src: '/images/gallery/img-13.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 4032,
+            height: 3024
         },
-        { 
-            src: '/images/gallery/img-14.jpg', 
+        {
+            src: '/images/gallery/img-14.jpg',
             alt: 'image',
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            width: 3531,
+            height: 2192
+        },
+        {
+            src: '/images/gallery/img-15.jpg',
+            alt: 'image',
+            orientation: 'vertical',
+            width: 3024,
+            height: 4032
         },
     ]
 }

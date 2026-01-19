@@ -1,0 +1,72 @@
+---
+title: "Hurdler 2.0"
+publishedAt: "2021-06-01"
+summary: "A ReactJS-based visualization of Dijkstra’s algorithm with dynamic UI, simulating real-world shortest-path computations."
+images:
+  - "/images/projects/project-01/optimized/hurdler2.0.mp4"
+team:
+  - name: "Anurag Singh"
+    role: "Frontend Developer"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/anurag-singh/"
+---
+
+## Overview
+
+Hurdler 2.0 is an interactive web application designed to visualize Dijkstra's algorithm. It allows users to understand pathfinding algorithms through a dynamic and engaging user interface.
+
+<SmartImage
+    aspectRatio="16 / 9"
+    radius="m"
+    alt="Hurdler 2.0 Demo"
+    src="/images/projects/project-01/optimized/hurdler2.0.mp4"
+/>
+
+[**View Live Demo**](https://anurag-s01.github.io/Hurdler2.0/)
+
+## Key Features
+
+- **Dynamic Visualization**: Real-time visual feedback of the algorithm's progress.
+- **Interactive Grid**: Users can place start/end nodes, walls, and weights.
+- **Weighted Paths**: Simulates different terrain costs (e.g., traffic, hills).
+- **Maze Generation**: Includes algorithms to generate random mazes.
+
+## Tech Stack
+
+<Flex gap="8" wrap="wrap" marginBottom="24">
+    <Badge variant="neutral">React.js</Badge>
+    <Badge variant="neutral">JavaScript</Badge>
+    <Badge variant="neutral">CSS3</Badge>
+    <Badge variant="neutral">Algorithms</Badge>
+</Flex>
+
+## Algorithm Implementation
+
+The core of the application is the Dijkstra algorithm implementation. Here is a simplified snippet of the logic:
+
+<Terminal title="Dijkstra.js">
+{`function dijkstra(grid, startNode, finishNode) {
+  const visitedNodesInOrder = [];
+  startNode.distance = 0;
+  const unvisitedNodes = getAllNodes(grid);
+  
+  while (!!unvisitedNodes.length) {
+    sortNodesByDistance(unvisitedNodes);
+    const closestNode = unvisitedNodes.shift();
+    
+    if (closestNode.isWall) continue;
+    if (closestNode.distance === Infinity) return visitedNodesInOrder;
+    
+    closestNode.isVisited = true;
+    visitedNodesInOrder.push(closestNode);
+    
+    if (closestNode === finishNode) return visitedNodesInOrder;
+    
+    updateUnvisitedNeighbors(closestNode, grid);
+  }
+}`}
+</Terminal>
+
+## Challenges
+
+One of the main challenges was optimizing the rendering performance during the visualization animation. React's state updates had to be carefully managed to ensure smooth animations without freezing the browser, especially on large grids.

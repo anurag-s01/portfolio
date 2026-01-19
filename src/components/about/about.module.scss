@@ -6,6 +6,15 @@
     }
 }
 
+.techCard {
+    transition: var(--transition-micro-medium);
+
+    &:hover {
+        background: var(--neutral-background-medium);
+        border-color: var(--neutral-border-strong);
+    }
+}
+
 @media (--s) {
     .textAlign {
         text-align: center;

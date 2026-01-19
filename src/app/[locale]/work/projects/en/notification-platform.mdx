@@ -1,0 +1,53 @@
+---
+title: "Enterprise Notification Platform"
+publishedAt: "2024-01-15"
+summary: "A scalable, event-driven multi-tenant notification platform handling millions of requests per day for Domino's and other brands."
+images:
+  - "/images/projects/project-01/cover-01.jpg"
+team:
+  - name: "Anurag Singh"
+    role: "Software Engineer"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/anurag-singh/"
+---
+
+## Overview
+
+Engineered an in-house scalable, event-driven multi-tenant and multi-app Notification Platform adopted by all Jubilant FoodWorks brands. The system enables real-time multichannel delivery (SMS, Push, Email, WhatsApp) with robust fallback and traffic diversion mechanisms.
+
+## Key Features
+
+- **High Scale**: Handles millions of requests per day with high availability.
+- **Multi-Channel**: Supports SMS, Push Notifications, Email, WhatsApp, and Live Notifications.
+- **Resilience**: Implemented fallback mechanisms and traffic diversion to ensure delivery.
+- **Event-Driven**: Built using Kafka for asynchronous processing and decoupling.
+
+## Tech Stack
+
+<Flex gap="8" wrap="wrap" marginBottom="24">
+    <Badge variant="neutral">Java</Badge>
+    <Badge variant="neutral">Spring Boot</Badge>
+    <Badge variant="neutral">Kafka</Badge>
+    <Badge variant="neutral">MongoDB</Badge>
+    <Badge variant="neutral">Resilience4j</Badge>
+    <Badge variant="neutral">Docker</Badge>
+</Flex>
+
+## Architecture Highlights
+
+The platform uses a microservices architecture where the core notification service consumes events from Kafka topics. It then routes these notifications to the appropriate vendor providers (e.g., FCM for push, Twilio for SMS) based on configuration and health status.
+
+<Terminal title="System Metrics">
+{`INFO  [NotificationService] Processing batch of 5000 events
+INFO  [KafkaConsumer] Consumed message: { type: "ORDER_UPDATE", userId: "u123", channel: "PUSH" }
+WARN  [VendorProvider] Primary SMS provider latency high (>200ms). Switching to fallback.
+INFO  [CircuitBreaker] Circuit 'sms-primary' OPEN.
+INFO  [VendorProvider] Routing traffic to Secondary SMS provider.
+INFO  [Metrics] Delivery Rate: 99.98% | Avg Latency: 45ms`}
+</Terminal>
+
+## Impact
+
+- **Reliability**: Significantly improved notification delivery rates during peak traffic (e.g., New Year's Eve).
+- **Cost Efficiency**: Optimized vendor usage through intelligent routing.
+- **Developer Experience**: Unified API for all internal teams to send notifications.

@@ -1,19 +1,12 @@
-import { Flex, Heading } from '@/once-ui/components';
-import { Mailchimp } from '@/components';
-import { Posts } from '@/components/blog/Posts';
-import { baseURL, renderContent } from '@/app/resources'
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import { useTranslations } from 'next-intl';
+import { Flex, Heading, Text, Button, SparkleFx } from '@/once-ui/components';
+import { baseURL } from '@/app/resources'
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 export async function generateMetadata(
-	{params: {locale}}: { params: { locale: string }}
+	{ params: { locale } }: { params: { locale: string } }
 ) {
-
-	const t = await getTranslations();
-	const { blog } = renderContent(t);
-
-	const title = blog.title;
-	const description = blog.description;
+	const title = "Blog - Coming Soon";
+	const description = "Our blog is currently under construction. Stay tuned for updates.";
 	const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
 
 	return {
@@ -41,51 +34,37 @@ export async function generateMetadata(
 }
 
 export default function Blog(
-	{ params: {locale}}: { params: { locale: string }}
+	{ params: { locale } }: { params: { locale: string } }
 ) {
 	unstable_setRequestLocale(locale);
 
-	const t = useTranslations();
-	const { person, blog, newsletter } = renderContent(t);
-    return (
-        <Flex
+	return (
+		<Flex
 			fillWidth maxWidth="s"
-			direction="column">
-            <script
-				type="application/ld+json"
-				suppressHydrationWarning
-				dangerouslySetInnerHTML={{
-					__html: JSON.stringify({
-						'@context': 'https://schema.org',
-						'@type': 'Blog',
-						headline: blog.title,
-						description: blog.description,
-						url: `https://${baseURL}/blog`,
-						image: `${baseURL}/og?title=${encodeURIComponent(blog.title)}`,
-						author: {
-							'@type': 'Person',
-							name: person.name,
-                            image: {
-								'@type': 'ImageObject',
-								url: `${baseURL}${person.avatar}`,
-							},
-						},
-					}),
-				}}
-			/>
-            <Heading
-                marginBottom="l"
-                variant="display-strong-s">
-                {blog.title}
-            </Heading>
-			<Flex
-				fillWidth flex={1} direction="column">
-				<Posts range={[1,3]} locale={locale} thumbnail/>
-				<Posts range={[4]} columns="2" locale={locale}/>
-			</Flex>
-            {newsletter.display && (
-                <Mailchimp newsletter={newsletter} />
-            )}
-        </Flex>
-    );
+			direction="column"
+			alignItems="center"
+			justifyContent="center"
+			gap="l"
+			paddingY="128">
+			<SparkleFx speed="medium" count={30}>
+				<Heading
+					variant="display-strong-l"
+					align="center">
+					Coming Soon
+				</Heading>
+			</SparkleFx>
+			<Text
+				variant="body-default-l"
+				onBackground="neutral-medium"
+				align="center">
+				We are crafting some amazing content for you. Stay tuned!
+			</Text>
+			<Button
+				href={`/${locale}`}
+				variant="secondary"
+				size="m">
+				Back to Home
+			</Button>
+		</Flex>
+	);
 }

@@ -26,15 +26,33 @@ import {
 	PiUserCircleDuotone,
 	PiGridFourDuotone,
 	PiBookBookmarkDuotone,
-	PiImageDuotone
+	PiImageDuotone,
+	PiFileCppDuotone
 } from "react-icons/pi";
 
 import {
 	FaDiscord,
 	FaGithub,
 	FaLinkedin,
-	FaXTwitter
+	FaXTwitter,
+	FaStackOverflow,
+	FaJava,
+	FaAws,
+	FaGitAlt,
+	FaDocker
 } from "react-icons/fa6";
+
+import {
+	SiSpringboot,
+	SiApachekafka,
+	SiAerospike,
+	SiMongodb,
+	SiRabbitmq
+} from "react-icons/si";
+
+import {
+	TbBrandMysql
+} from "react-icons/tb";
 
 export const iconLibrary: Record<string, IconType> = {
 	chevronUp: HiChevronUp,
@@ -63,5 +81,17 @@ export const iconLibrary: Record<string, IconType> = {
 	github: FaGithub,
 	linkedin: FaLinkedin,
 	x: FaXTwitter,
-	clipboard: HiClipboard
+	stackOverflow: FaStackOverflow,
+	clipboard: HiClipboard,
+	springboot: SiSpringboot,
+	apacheKafka: SiApachekafka,
+	aerospike: SiAerospike,
+	mysql: TbBrandMysql,
+	mongoDB: SiMongodb,
+	rabbitmq: SiRabbitmq,
+	java: FaJava,
+	aws: FaAws,
+	git: FaGitAlt,
+	docker: FaDocker,
+	cpp: PiFileCppDuotone,
 };

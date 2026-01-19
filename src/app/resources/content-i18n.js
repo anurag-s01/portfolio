@@ -9,8 +9,9 @@ const createI18nContent = (t) => {
         },
         role:      t("person.role"),
         avatar:    '/images/avatar.jpg',
-        location:  'Asia/Jakarta',        // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-        languages: ['English', 'Bahasa']  // optional: Leave the array empty if you don't want to display languages
+        location: 'Asia/Kolkata',// Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+        residence: 'India',
+        languages: ['English']  // optional: Leave the array empty if you don't want to display languages
     }
 
     const newsletter = {
@@ -117,36 +118,17 @@ const createI18nContent = (t) => {
             display: true, // set to false to hide this section
             title: t("about.technical.title"),
             skills: [
-                {
-                    title: 'Figma',
-                    description: <>{t("about.technical.skills.Figma.description")}</>,
-                    images: [
-                        {
-                            src: '/images/projects/project-01/cover-02.jpg',
-                            alt: 'Project image',
-                            width: 16,
-                            height: 9
-                        },
-                        {
-                            src: '/images/projects/project-01/cover-03.jpg',
-                            alt: 'Project image',
-                            width: 16,
-                            height: 9
-                        },
-                    ]
-                },
-                {
-                    title: 'Next.js',
-                    description: <>{t("about.technical.skills.Nextjs.description")}</>, // "." not accepted in next-intl namespace
-                    images: [
-                        {
-                            src: '/images/projects/project-01/cover-04.jpg',
-                            alt: 'Project image',
-                            width: 16,
-                            height: 9
-                        },
-                    ]
-                }
+            { title: "Java", icon: 'java' },
+            { title: "C++", icon: 'cpp' },
+            { title: "Spring Boot", icon: 'springboot' },
+            { title: "Apache Kafka", icon: 'apacheKafka' },
+            { title: "RabbitMQ", icon: 'rabbitmq' },
+            { title: "MySQL", icon: "mysql" },
+            { title: "MongoDB", icon: "mongoDB" },
+            { title: "Aerospike", icon: "aerospike" },
+            { title: "AWS", icon: "aws" },
+            { title: "Docker", icon: "docker" }
+                
             ]
         }
     }
