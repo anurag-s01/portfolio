@@ -16,6 +16,7 @@ import { routing } from "@/i18n/routing";
 import { renderContent } from "@/app/resources";
 import { Background, Flex } from "@/once-ui/components";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 export async function generateMetadata(
 	{ params: { locale }}: { params: { locale: string }}
@@ -134,6 +135,7 @@ export default async function RootLayout({
 					</Flex>
 					<Footer/>
 					<SpeedInsights />
+					<Analytics />
 				</Flex>
 			</Flex>
 		</NextIntlClientProvider>
