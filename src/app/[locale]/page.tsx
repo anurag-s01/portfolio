@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 
 import { Heading, Flex, Text, Button, Avatar, RevealFx, Arrow } from '@/once-ui/components';
 import { Projects } from '@/components/work/Projects';
@@ -6,19 +6,24 @@ import { Projects } from '@/components/work/Projects';
 import { baseURL, routes, renderContent } from '@/app/resources';
 import { Mailchimp } from '@/components';
 import { Posts } from '@/components/blog/Posts';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { Certificates } from '@/components/home/Certificates';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 
-export async function generateMetadata(
-	{ params: { locale } }: { params: { locale: string } }
-) {
-	const t = await getTranslations();
-	const { home } = renderContent(t);
-	const title = home.title;
-	const description = home.description;
-	const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+    const params = await props.params;
 
-	return {
+    const {
+        locale
+    } = params;
+
+    const t = await getTranslations();
+    const { home } = renderContent(t);
+    const title = home.title;
+    const description = home.description;
+    const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+
+    return {
 		title,
 		description,
 		openGraph: {
@@ -42,13 +47,17 @@ export async function generateMetadata(
 	};
 }
 
-export default function Home(
-	{ params: { locale } }: { params: { locale: string } }
-) {
-	unstable_setRequestLocale(locale);
-	const t = useTranslations();
-	const { home, about, person, newsletter } = renderContent(t);
-	return (
+export default function Home(props: { params: Promise<{ locale: string }> }) {
+    const params = use(props.params);
+
+    const {
+        locale
+    } = params;
+
+    setRequestLocale(locale);
+    const t = useTranslations();
+    const { home, about, person, newsletter } = renderContent(t);
+    return (
 		<Flex
 			maxWidth="m" fillWidth gap="xl"
 			direction="column" alignItems="center">
@@ -101,7 +110,7 @@ export default function Home(
 						</Flex>
 					</RevealFx>
 					<RevealFx translateY="12" delay={0.4}>
-						<Flex fillWidth>
+						<Flex fillWidth gap="s">
 							<Button
 								id="about"
 								data-border="rounded"
@@ -121,16 +130,37 @@ export default function Home(
 									<Arrow trigger="#about" />
 								</Flex>
 							</Button>
+							<Button
+								id="resume"
+								data-border="rounded"
+								href="/docs/Resume_Anurag.pdf"
+								target="_blank"
+								variant="primary"
+								size="m">
+								Download Resume
+							</Button>
 						</Flex>
 					</RevealFx>
 				</Flex>
 
 			</Flex>
-			<RevealFx translateY="16" delay={0.6}>
-				<Projects range={[1, 1]} locale={locale} />
+			<RevealFx translateY="32" delay={0.2}>
+				<Flex direction="column" fillWidth alignItems="center" gap="m">
+					<Projects range={[1, 2]} locale={locale} />
+					<Button 
+						href={`/${locale}/work`} 
+						variant="tertiary" 
+						size="m" 
+						data-border="rounded"
+						style={{ backdropFilter: 'blur(10px)', background: 'var(--neutral-alpha-weak)', marginTop: '-1rem' }}>
+						Explore Curated Work
+					</Button>
+				</Flex>
 			</RevealFx>
-
-			<Projects range={[2]} locale={locale} />
+			
+			<RevealFx translateY="32" delay={0.4}>
+				<Certificates />
+			</RevealFx>
 			{newsletter.display &&
 				<Mailchimp newsletter={newsletter} />
 			}

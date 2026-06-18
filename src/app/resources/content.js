@@ -81,8 +81,9 @@ const about = {
                 timeframe: 'Aug 2025 - Present',
                 role: 'Senior Software Engineer',
                 achievements: [
-                    <>Driving end-to-end backend development for Corporate Orders, transforming a fully offline process into a seamless online experience.</>,
-                    <>Building order flow integrations for Razorpay and VIPL eVoucher partners for Domino’s, expanding market reach.</>
+                    <>Architected a zero-deployment, multi-tenant Campaign Engine microservice with a custom rule evaluation core for complex condition schemas, enabling real-time cart personalization and dynamic promotions for millions of daily user sessions.</>,
+                    <>Digitized Corporate Orders end-to-end from a fully offline process to a self-serve online platform, eliminating manual fulfillment overhead and expanding B2B revenue.</>,
+                    <>Grew Domino's active payment channels by integrating Swiggy Toing with core ordering backend and onboarding Razorpay and VIPL eVoucher payment partners.</>
                 ],
                 images: []
             },
@@ -91,10 +92,11 @@ const about = {
                 timeframe: 'July 2023 - July 2025',
                 role: 'Software Engineer',
                 achievements: [
-                    <>Engineered an in-house scalable, event-driven multi-tenant Notification Platform using Kafka and Spring Boot, handling millions of requests/day.</>,
-                    <>Spearheaded backend integration between Domino’s and Zomato IRCTC Train Orders using a dynamic template-based architecture.</>,
-                    <>Achieved 79% latency reduction in MongoDB query execution and 91% improvement in request handling overhead.</>,
-                    <>Delivered Flat Price Menu feature contributing to up to 49% uplift in campaign-driven conversions.</>
+                    <>Unified all JFL brand notifications into a centralized, event-driven, multi-tenant Notification Platform on Kafka and Spring Boot, processing millions of requests/day across 5 channels.</>,
+                    <>Extended Domino's ordering reach to India's rail passenger network by integrating Zomato IRCTC Train Orders via a dynamic template-driven backend.</>,
+                    <>Boosted IRCTC flow conversion rate by 230 bps and grew train order volume by 25% by leading a complete backend revamp to a Next-Gen Train Ordering Flow.</>,
+                    <>Cut MongoDB query latency by 79% (18.7ms to 3.9ms) and reduced request handling overhead by 91% through advanced query profiling and index strategy redesign.</>,
+                    <>Drove up to 49% uplift in campaign-driven conversions by shipping Flat Price Menu - a feature with time- and region-scoped feature toggles and A/B experimentation.</>
                 ],
                 images: []
             },
@@ -103,8 +105,8 @@ const about = {
                 timeframe: 'Jan 2023 - Jun 2023',
                 role: 'Graduate Engineering Trainee',
                 achievements: [
-                    <>Contributed to core service reliability by Java & Spring-boot version upgrade and implementing circuit-breakers using Resilience4j.</>,
-                    <>Strengthened application security by remediating exploit vectors & third-party vulnerable libraries using OWASP dependency-check.</>
+                    <>Hardened reliability of core BAU microservices by implementing circuit breakers via Resilience4j and executing a Java and Spring Boot version upgrade.</>,
+                    <>Eliminated high-severity CVEs across the microservices estate by integrating OWASP Dependency-Check into CI/CD pipelines.</>
                 ],
                 images: []
             },
@@ -113,8 +115,7 @@ const about = {
                 timeframe: 'May 2022 - July 2022',
                 role: 'Technology Intern',
                 achievements: [
-                    <>Built a custom in-house JSON validator using Java for processing corporate payment files with details validation failure reporting.</>,
-                    <>Implemented web interface using React.js for corporate payment files validator.</>
+                    <>Reduced corporate payment file validation errors and manual review cycles by delivering a full-stack solution - a custom Java-based JSON validator with automated failure-detail reporting and a React.js web interface.</>
                 ],
                 images: []
             }

@@ -3,14 +3,14 @@ import "@/once-ui/tokens/index.scss";
 
 import classNames from 'classnames';
 
-import { Footer, Header, RouteGuard } from "@/components";
+import { Footer, Header, RouteGuard, ScrollIndicator } from "@/components";
 import { baseURL, effects, style } from '@/app/resources'
 
 import { Inter } from 'next/font/google'
 import { Source_Code_Pro } from 'next/font/google';
 
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { routing } from "@/i18n/routing";
 import { renderContent } from "@/app/resources";
@@ -18,14 +18,17 @@ import { Background, Flex } from "@/once-ui/components";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 
-export async function generateMetadata(
-	{ params: { locale }}: { params: { locale: string }}
-) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }>}) {
+    const params = await props.params;
 
-	const t = await getTranslations();
-	const { person, home } = renderContent(t);
+    const {
+        locale
+    } = params;
 
-	return {
+    const t = await getTranslations();
+    const { person, home } = renderContent(t);
+
+    return {
 		metadataBase: new URL(`https://${baseURL}/${locale}`),
 		title: home.title,
 		description: home.description,
@@ -78,20 +81,27 @@ const code = Source_Code_Pro({
 
 interface RootLayoutProps {
 	children: React.ReactNode;
-	params: {locale: string};
+	params: Promise<{locale: string}>;
 }
 
 export function generateStaticParams() {
 	return routing.locales.map((locale) => ({locale}));
   }
 
-export default async function RootLayout({
-	children,
-	params: {locale}
-} : RootLayoutProps) {
-	unstable_setRequestLocale(locale);
-	const messages = await getMessages();
-	return (
+export default async function RootLayout(props: RootLayoutProps) {
+    const params = await props.params;
+
+    const {
+        locale
+    } = params;
+
+    const {
+        children
+    } = props;
+
+    setRequestLocale(locale);
+    const messages = await getMessages();
+    return (
 		<NextIntlClientProvider messages={messages}>
 			<Flex
 				as="html" lang="en"
@@ -130,6 +140,7 @@ export default async function RootLayout({
 							fillWidth minHeight="0">
 							<RouteGuard>
 								{children}
+								<ScrollIndicator />
 							</RouteGuard>
 						</Flex>
 					</Flex>
