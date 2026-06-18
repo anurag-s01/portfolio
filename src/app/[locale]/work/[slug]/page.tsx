@@ -1,18 +1,19 @@
+import { use } from "react";
 import { notFound } from 'next/navigation'
 import { CustomMDX } from '@/components/mdx'
 import { getPosts } from '@/app/utils/utils'
 import { AvatarGroup, Button, Flex, Heading, SmartImage, Text } from '@/once-ui/components'
 import { baseURL, renderContent } from '@/app/resources';
 import { routing } from '@/i18n/routing';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import { formatDate } from '@/app/utils/formatDate';
 
 interface WorkParams {
-    params: {
+    params: Promise<{
         slug: string;
 		locale: string;
-    };
+    }>;
 }
 
 export async function generateStaticParams() {
@@ -33,14 +34,21 @@ export async function generateStaticParams() {
     return allPosts;
 }
 
-export function generateMetadata({ params: { slug, locale } }: WorkParams) {
-	let post = getPosts(['src', 'app', '[locale]', 'work', 'projects', locale]).find((post) => post.slug === slug)
-	
-	if (!post) {
+export async function generateMetadata(props: WorkParams) {
+    const params = await props.params;
+
+    const {
+        slug,
+        locale
+    } = params;
+
+    let post = getPosts(['src', 'app', '[locale]', 'work', 'projects', locale]).find((post) => post.slug === slug)
+
+    if (!post) {
 		return
 	}
 
-	let {
+    let {
 		title,
 		publishedAt: publishedTime,
 		summary: description,
@@ -48,11 +56,11 @@ export function generateMetadata({ params: { slug, locale } }: WorkParams) {
 		image,
 		team,
 	} = post.metadata
-	let ogImage = image
+    let ogImage = image
 		? `https://${baseURL}${image}`
 		: `https://${baseURL}/og?title=${title}`;
 
-	return {
+    return {
 		title,
 		description,
 		images,
@@ -78,22 +86,23 @@ export function generateMetadata({ params: { slug, locale } }: WorkParams) {
 	}
 }
 
-export default function Project({ params }: WorkParams) {
-	unstable_setRequestLocale(params.locale);
-	let post = getPosts(['src', 'app', '[locale]', 'work', 'projects', params.locale]).find((post) => post.slug === params.slug)
+export default function Project(props: WorkParams) {
+    const params = use(props.params);
+    setRequestLocale(params.locale);
+    let post = getPosts(['src', 'app', '[locale]', 'work', 'projects', params.locale]).find((post) => post.slug === params.slug)
 
-	if (!post) {
+    if (!post) {
 		notFound()
 	}
 
-	const t = useTranslations();
-	const { person } = renderContent(t);
+    const t = useTranslations();
+    const { person } = renderContent(t);
 
-	const avatars = post.metadata.team?.map((person) => ({
+    const avatars = post.metadata.team?.map((person) => ({
         src: person.avatar,
     })) || [];
 
-	return (
+    return (
 		<Flex as="section"
 			fillWidth maxWidth="m"
 			direction="column" alignItems="center"

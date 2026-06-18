@@ -1,3 +1,4 @@
+import { use } from "react";
 import {
   Avatar,
   Button,
@@ -13,15 +14,21 @@ import {
 import { baseURL, renderContent } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { iconLibrary } from "@/once-ui/icons";
 
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   const t = await getTranslations();
   const { person, about, social } = renderContent(t);
   const title = about.title;
@@ -52,12 +59,18 @@ export async function generateMetadata({
   };
 }
 
-export default function About({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
-  unstable_setRequestLocale(locale);
+export default function About(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+) {
+  const params = use(props.params);
+
+  const {
+    locale
+  } = params;
+
+  setRequestLocale(locale);
   const t = useTranslations();
   const { person, about, social } = renderContent(t);
   const renderIcon = (iconName: string) => {

@@ -1,15 +1,19 @@
 import { Flex, Heading, Text, Button, SparkleFx } from '@/once-ui/components';
 import { baseURL } from '@/app/resources'
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 
-export async function generateMetadata(
-	{ params: { locale } }: { params: { locale: string } }
-) {
-	const title = "Blog - Coming Soon";
-	const description = "Our blog is currently under construction. Stay tuned for updates.";
-	const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
+    const params = await props.params;
 
-	return {
+    const {
+        locale
+    } = params;
+
+    const title = "Blog - Coming Soon";
+    const description = "Our blog is currently under construction. Stay tuned for updates.";
+    const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+
+    return {
 		title,
 		description,
 		openGraph: {
@@ -33,12 +37,16 @@ export async function generateMetadata(
 	};
 }
 
-export default function Blog(
-	{ params: { locale } }: { params: { locale: string } }
-) {
-	unstable_setRequestLocale(locale);
+export default async function Blog(props: { params: Promise<{ locale: string }> }) {
+    const params = await props.params;
 
-	return (
+    const {
+        locale
+    } = params;
+
+    setRequestLocale(locale);
+
+    return (
 		<Flex
 			fillWidth maxWidth="s"
 			direction="column"
