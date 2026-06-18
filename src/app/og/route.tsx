@@ -2,7 +2,6 @@ import { ImageResponse } from 'next/og'
 import { baseURL, renderContent } from '@/app/resources';
 import { getTranslations } from 'next-intl/server';
 
-export const runtime = 'edge';
 
 export async function GET(request: Request) {
     let url = new URL(request.url)
