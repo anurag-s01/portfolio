@@ -15,6 +15,8 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { routing } from "@/i18n/routing";
 import { renderContent } from "@/app/resources";
 import { Background, Flex } from "@/once-ui/components";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }>}) {
     const params = await props.params;
@@ -143,6 +145,8 @@ export default async function RootLayout(props: RootLayoutProps) {
 						</Flex>
 					</Flex>
 					<Footer/>
+					<SpeedInsights />
+					<Analytics />
 				</Flex>
 			</Flex>
 		</NextIntlClientProvider>
