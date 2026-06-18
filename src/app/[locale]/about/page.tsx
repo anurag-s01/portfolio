@@ -344,7 +344,7 @@ export default function About(
                 {about.technical.title}
               </Heading>
               <Grid
-                columns="4"
+                columns="repeat(4, 1fr)"
                 tabletColumns="3col"
                 mobileColumns="2col"
                 gap="m"
@@ -356,11 +356,13 @@ export default function About(
                     className={styles.techCard}
                     border="neutral-medium"
                     borderStyle="solid-1"
-                    radius="m"
+                    radius="l"
                     padding="m"
                     direction="column"
                     alignItems="center"
-                    gap="8"
+                    background="surface"
+                    alpha="neutral-weak"
+                    gap="12"
                   >
                     <Icon name={skill.icon} size="l" />
                     <Text variant="body-default-m">

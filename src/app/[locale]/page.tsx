@@ -144,11 +144,21 @@ export default function Home(props: { params: Promise<{ locale: string }> }) {
 				</Flex>
 
 			</Flex>
-			<RevealFx translateY="16" delay={0.6}>
-				<Projects range={[1, 2]} locale={locale} />
+			<RevealFx translateY="32" delay={0.2}>
+				<Flex direction="column" fillWidth alignItems="center" gap="m">
+					<Projects range={[1, 2]} locale={locale} />
+					<Button 
+						href={`/${locale}/work`} 
+						variant="tertiary" 
+						size="m" 
+						data-border="rounded"
+						style={{ backdropFilter: 'blur(10px)', background: 'var(--neutral-alpha-weak)', marginTop: '-1rem' }}>
+						Explore Curated Work
+					</Button>
+				</Flex>
 			</RevealFx>
 			
-			<RevealFx translateY="16" delay={0.8}>
+			<RevealFx translateY="32" delay={0.4}>
 				<Certificates />
 			</RevealFx>
 			{newsletter.display &&

@@ -1,4 +1,4 @@
-import { Flex, Heading } from '@/once-ui/components';
+import { Flex, Heading, Text } from '@/once-ui/components';
 import Image from 'next/image';
 
 const certificates = [
@@ -14,23 +14,26 @@ export function Certificates() {
         <Flex
             fillWidth gap="m" paddingY="l" direction="column">
             <Heading variant="display-strong-s">Achievements</Heading>
+            <Text onBackground="neutral-weak" marginBottom="m">
+                Recognized for excellence across multiple domains, including the Best Market Maker of the Year and Star Performer Awards.
+            </Text>
             <Flex
                 fillWidth gap="m"
                 style={{
-                    overflowY: 'auto',
-                    maxHeight: '600px',
-                    paddingRight: '1rem',
+                    overflowX: 'auto',
+                    overflowY: 'hidden',
+                    paddingBottom: '1rem',
                 }}
                 className="scrollable-certificates"
-                direction="column">
+                direction="row">
                 {certificates.map((cert, index) => (
-                    <Flex key={index} fillWidth style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--neutral-border-medium)' }}>
+                    <Flex key={index} style={{ minWidth: '300px', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--neutral-border-medium)', background: 'var(--neutral-alpha-weak)' }}>
                         <Image
                             src={cert.src}
                             alt={cert.alt}
                             width={800}
                             height={600}
-                            style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
+                            style={{ objectFit: 'contain', width: '100%', height: 'auto', maxHeight: '250px' }}
                         />
                     </Flex>
                 ))}
@@ -38,7 +41,7 @@ export function Certificates() {
             <style dangerouslySetInnerHTML={{
                 __html: `
                 .scrollable-certificates::-webkit-scrollbar {
-                    width: 6px;
+                    height: 8px;
                 }
                 .scrollable-certificates::-webkit-scrollbar-track {
                     background: transparent;

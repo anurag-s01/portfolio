@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, forwardRef } from 'react';
 import { SpacingToken } from '../types';
 import styles from './RevealFx.module.scss';
 import { Flex } from '.';
@@ -26,22 +26,53 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(({
 	style,
 	className,
 	...rest
-}, ref) => {
+}, forwardedRef) => {
 	const [isRevealed, setIsRevealed] = useState(revealedByDefault);
+	const localRef = useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setIsRevealed(true);
-		}, delay * 1000);
-
-		return () => clearTimeout(timer);
-	}, [delay]);
+	const setRefs = useCallback(
+		(node: HTMLDivElement) => {
+			localRef.current = node;
+			if (typeof forwardedRef === 'function') {
+				forwardedRef(node);
+			} else if (forwardedRef) {
+				forwardedRef.current = node;
+			}
+		},
+		[forwardedRef]
+	);
 
 	useEffect(() => {
 		if (trigger !== undefined) {
 			setIsRevealed(trigger);
+			return;
 		}
-	}, [trigger]);
+
+		if (revealedByDefault) return;
+
+		const currentElement = localRef.current;
+		if (!currentElement) return;
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setTimeout(() => {
+						setIsRevealed(true);
+					}, delay * 1000);
+					observer.unobserve(entry.target);
+				}
+			},
+			{ rootMargin: '0px 0px -100px 0px', threshold: 0 }
+		);
+
+		observer.observe(currentElement);
+
+		return () => {
+			if (currentElement) {
+				observer.unobserve(currentElement);
+			}
+		};
+	}, [delay, trigger, revealedByDefault]);
 
 	const getSpeedDuration = () => {
 		switch (speed) {
@@ -71,7 +102,6 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(({
 
 	const revealStyle: React.CSSProperties = {
 		transitionDuration: getSpeedDuration(),
-		transform: isRevealed ? 'translateY(0)' : `translateY(${translateValue})`,
 		...style,
 	};
 
@@ -79,7 +109,7 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(({
 		<Flex
 			fillWidth
 			justifyContent="center"
-			ref={ref}
+			ref={setRefs}
 			aria-hidden="true"
 			style={revealStyle}
 			className={combinedClassName}
