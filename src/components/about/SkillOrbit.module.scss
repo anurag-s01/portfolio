@@ -13,26 +13,33 @@
     inset: 0;
 }
 
+// One grid cell filling the stage: the title (or hovered skill) sits at the exact centre.
 .center {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 54%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
     z-index: 1;
 }
 
-// Text sized from the ring's width, so it always clears the orbs (beats the global .font-display size).
-.stage .center h2 {
+// Sized from the ring's width (cqi), so it always clears the orbs.
+.title {
+    grid-area: 1 / 1;
+    max-width: 54%;
+    margin: 0;
+    text-align: center;
     font-size: min(8cqi, 40px);
+    font-weight: 560;
     line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    color: var(--neutral-on-background-strong);
 }
 
-.stage .center p,
-.stage .center span {
+.hint {
     font-size: min(3.6cqi, 14px);
-    line-height: 1.4;
+    color: var(--neutral-on-background-weak);
 }
 
 // --cx/--cy are the orb's unit-circle position; the ring is square, so % works on both axes.
@@ -83,34 +90,5 @@
             inset 0 6px 10px rgba(255, 255, 255, 0.3),
             0 0 0 1px var(--accent-solid-strong),
             0 0 28px var(--brand-alpha-strong);
-
-        .label {
-            display: block;
-        }
     }
-}
-
-.label {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    margin-top: 6px;
-    white-space: nowrap;
-    font-size: 12px;
-    color: var(--neutral-on-background-strong);
-    background: var(--neutral-background-strong);
-    border: 1px solid var(--neutral-alpha-medium);
-    border-radius: 999px;
-    padding: 2px 10px;
-    pointer-events: none;
-    z-index: 2;
-    // display:none (not opacity) so hidden labels near the ring edge can't widen the page.
-    display: none;
-    animation: label-in 0.2s ease both;
-}
-
-@keyframes label-in {
-    from { opacity: 0; transform: translate(-50%, 0); }
-    to { opacity: 1; transform: translate(-50%, 4px); }
 }

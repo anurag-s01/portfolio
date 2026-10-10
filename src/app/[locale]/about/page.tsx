@@ -15,7 +15,7 @@ import styles from "@/components/about/about.module.scss";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { iconLibrary } from "@/once-ui/icons";
-import { FadeHint, Reveal, ScrollLine, TimelineDot } from "@/components/motion/primitives";
+import { Reveal, ScrollLine, TimelineDot } from "@/components/motion/primitives";
 import { TitleBand } from "@/components/backgrounds/PageBackdrop";
 import { SkillOrbit } from "@/components/about/SkillOrbit";
 
@@ -352,16 +352,7 @@ export default function About(
 
           {about.technical.display && (
             <>
-              <SkillOrbit skills={about.technical.skills}>
-                <Heading as="h2" id={about.technical.title} variant="display-strong-s">
-                  {about.technical.title}
-                </Heading>
-                <FadeHint seconds={3}>
-                  <Text variant="body-default-s" onBackground="neutral-weak" marginTop="8">
-                    Hover or tap an orb to see what it is.
-                  </Text>
-                </FadeHint>
-              </SkillOrbit>
+              <SkillOrbit skills={about.technical.skills} title={about.technical.title} hint="Hover or tap an orb" />
             </>
           )}
         </Flex>
