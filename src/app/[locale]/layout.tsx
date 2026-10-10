@@ -47,6 +47,7 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 			locale: 'en_US',
 			type: 'website',
 		},
+		verification: { google: "AXDsPgbtyGwpGCIzNmoxQzG74GB2BQPss9zsoPDvzbU" },
 		robots: {
 			index: true,
 			follow: true,
