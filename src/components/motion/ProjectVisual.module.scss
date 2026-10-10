@@ -1,0 +1,100 @@
+.frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    border-radius: var(--radius-l);
+    border: 1px solid var(--neutral-alpha-weak);
+    background:
+        radial-gradient(120% 90% at 0% 0%, var(--brand-alpha-weak), transparent 55%),
+        radial-gradient(90% 80% at 100% 100%, var(--accent-alpha-weak), transparent 60%),
+        var(--neutral-background-weak);
+    overflow: hidden;
+    font-family: var(--font-code), monospace;
+}
+
+.grid { stroke: var(--neutral-alpha-weak); }
+
+.node {
+    fill: var(--neutral-background-medium);
+    stroke: var(--neutral-alpha-strong);
+    stroke-width: 1;
+}
+
+.nodeBrand {
+    fill: var(--brand-alpha-weak);
+    stroke: var(--accent-solid-strong);
+    stroke-width: 1.2;
+}
+
+.nodeAccent {
+    fill: var(--accent-alpha-weak);
+    stroke: var(--brand-solid-medium);
+    stroke-width: 1.2;
+}
+
+.text { fill: var(--neutral-on-background-strong); font-size: 13px; }
+.small { fill: var(--neutral-on-background-weak); font-size: 10.5px; }
+.big { fill: var(--neutral-on-background-strong); font-size: 26px; font-weight: 600; }
+.brandText { fill: var(--brand-on-background-strong); font-size: 13px; }
+
+.wire {
+    fill: none;
+    stroke: var(--neutral-alpha-medium);
+    stroke-width: 1.2;
+    stroke-dasharray: 4 4;
+}
+
+.packet { fill: var(--accent-solid-strong); filter: drop-shadow(0 0 4px var(--accent-solid-strong)); }
+.packetAccent { fill: var(--brand-solid-strong); filter: drop-shadow(0 0 4px var(--brand-solid-strong)); }
+
+.line { fill: none; stroke: var(--accent-solid-strong); stroke-width: 2.5; stroke-linecap: round; }
+.lineMuted { fill: none; stroke: var(--neutral-alpha-strong); stroke-width: 1.5; stroke-dasharray: 3 5; }
+
+.store {
+    fill: var(--neutral-alpha-medium);
+    animation: storeLoad 6s infinite;
+}
+
+@keyframes storeLoad {
+    0%, 100% { fill: var(--neutral-alpha-medium); }
+    30% { fill: var(--accent-solid-medium); }
+    45% { fill: var(--brand-solid-medium); }
+    60% { fill: var(--neutral-alpha-strong); }
+}
+
+.cell { fill: var(--neutral-alpha-weak); }
+.wall { fill: var(--neutral-solid-medium); }
+
+.paused * { animation-play-state: paused !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    .store { animation: none; }
+}
+
+.visit {
+    fill: transparent;
+    animation: visit 10s infinite both;
+}
+
+.path {
+    fill: transparent;
+    animation: pathCell 10s infinite both;
+}
+
+@keyframes visit {
+    0% { fill: transparent; }
+    3% { fill: var(--brand-solid-medium); }
+    8%, 62% { fill: var(--accent-alpha-medium); }
+    68%, 100% { fill: transparent; }
+}
+
+@keyframes pathCell {
+    0% { fill: transparent; }
+    4%, 40% { fill: var(--accent-solid-strong); }
+    46%, 100% { fill: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .visit, .path { animation: none; }
+    .path { fill: var(--accent-solid-strong); }
+}

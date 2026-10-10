@@ -1,6 +1,7 @@
 import { use } from "react";
 import { Flex } from "@/once-ui/components";
 import MasonryGrid from "@/components/gallery/MasonryGrid";
+import { GalleryExperience } from "@/components/gallery/GalleryExperience";
 import { baseURL, renderContent } from "@/app/resources";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
@@ -22,11 +23,12 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
     return {
 		title,
 		description,
+		alternates: { canonical: `https://${baseURL}/gallery` },
 		openGraph: {
 			title,
 			description,
 			type: 'website',
-			url: `https://${baseURL}/${locale}/gallery`,
+			url: `https://${baseURL}/gallery`,
 			images: [
 				{
 					url: ogImage,
@@ -67,7 +69,7 @@ export default function Gallery(props: { params: Promise<{ locale: string }>}) {
 						url: `https://${baseURL}/gallery`,
 						image: gallery.images.map((image) => ({
                             '@type': 'ImageObject',
-                            url: `${baseURL}${image.src}`,
+                            url: `https://${baseURL}${image.src}`,
                             description: image.alt,
                         })),
 						author: {
@@ -75,13 +77,17 @@ export default function Gallery(props: { params: Promise<{ locale: string }>}) {
 							name: person.name,
                             image: {
 								'@type': 'ImageObject',
-								url: `${baseURL}${person.avatar}`,
+								url: `https://${baseURL}${person.avatar}`,
 							},
 						},
 					}),
 				}}
 			/>
-            <MasonryGrid/>
+            <GalleryExperience
+                images={gallery.images.map((image) => ({ src: image.src, alt: image.alt }))}
+                title="Moments"
+                description="Places and frames I keep coming back to."
+                fallback={<MasonryGrid/>}/>
         </Flex>
     );
 }

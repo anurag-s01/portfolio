@@ -1,4 +1,4 @@
-const baseURL = 'demo.magic-portfolio.com'
+const baseURL = 'anuragsinghdev.vercel.app'
 
 // Enable localization
 const i18n = false;
@@ -13,14 +13,7 @@ const routes = {
     '/': true,
     '/about': true,
     '/work': true,
-    '/blog': true,
     '/gallery': true,
-}
-
-// Enable password protection on selected routes
-// Set password in pages/api/authenticate.ts
-const protectedRoutes = {
-    '/work/automate-design-handovers-with-a-figma-to-code-pipeline': true
 }
 
 const effects = {
@@ -41,10 +34,10 @@ const effects = {
 
 const style = {
     theme: 'dark',         // dark | light
-    neutral: 'sand',         // sand | gray | slate
-    brand: 'orange',      // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
-    accent: 'magenta',       // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
-    solid: 'color',     // color | contrast
+    neutral: 'gray',         // sand | gray | slate
+    brand: 'blue',        // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+    accent: 'blue',          // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+    solid: 'contrast',  // color | contrast — contrast gives ivory/ink primary buttons
     solidStyle: 'flat',         // flat | plastic
     border: 'playful',      // rounded | playful | conservative
     surface: 'translucent',  // filled | translucent
@@ -56,21 +49,4 @@ const display = {
     time: true
 }
 
-const mailchimp = {
-    action: 'https://url/subscribe/post?parameters',
-    effects: {
-        mask: 'topRight',           // none | cursor | topLeft | topRight | bottomLeft | bottomRight
-        gradient: {
-            display: true,
-            opacity: 0.6           // 0 - 1
-        },
-        dots: {
-            display: true,
-        },
-        lines: {
-            display: true,
-        },
-    }
-}
-
-export { routes, protectedRoutes, effects, style, display, mailchimp, baseURL, i18n, i18nOptions };
+export { routes, effects, style, display, baseURL, i18n, i18nOptions };

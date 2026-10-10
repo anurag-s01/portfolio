@@ -1,0 +1,152 @@
+.dialog {
+    width: min(640px, calc(100vw - 32px));
+    margin: 12vh auto auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--neutral-on-background-strong);
+
+    &::backdrop {
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(6px);
+    }
+}
+
+// Liquid-glass panel, same recipe as the nav.
+.panel {
+    border-radius: 20px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--page-background) 70%, transparent);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid var(--neutral-alpha-medium);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 30px 80px -20px rgba(0, 0, 0, 0.55);
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--neutral-alpha-weak);
+
+    svg {
+        width: 20px;
+        height: 20px;
+        color: var(--neutral-on-background-weak);
+        flex-shrink: 0;
+    }
+
+    input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: none;
+        background: transparent;
+        font: inherit;
+        font-size: 17px;
+        color: inherit;
+
+        &::placeholder {
+            color: var(--neutral-on-background-weak);
+        }
+    }
+}
+
+.search kbd,
+.trigger kbd {
+    font: inherit;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--neutral-alpha-medium);
+    color: var(--neutral-on-background-weak);
+}
+
+.list {
+    max-height: min(420px, 60vh);
+    overflow-y: auto;
+    margin: 0;
+    padding: 8px;
+    list-style: none;
+}
+
+.section {
+    padding: 12px 10px 6px;
+    font-size: 12px;
+    color: var(--neutral-on-background-weak);
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+
+    &[aria-selected="true"] {
+        background: var(--neutral-alpha-medium);
+    }
+}
+
+.desc {
+    flex-shrink: 0;
+    font-size: 13px;
+    color: var(--neutral-on-background-weak);
+}
+
+.empty {
+    padding: 20px 12px;
+    color: var(--neutral-on-background-weak);
+}
+
+.trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 8px 0 10px;
+    border-radius: 999px;
+    border: 1px solid var(--neutral-alpha-medium);
+    background: var(--neutral-alpha-weak);
+    color: var(--neutral-on-background-strong);
+    cursor: pointer;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            background: var(--neutral-alpha-medium);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--accent-solid-strong);
+        outline-offset: 2px;
+    }
+
+    // Phones: just the icon, as a round button matching the theme toggle.
+    @media (max-width: 768px) {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+
+        kbd {
+            display: none;
+        }
+    }
+}

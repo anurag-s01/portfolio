@@ -1,15 +1,23 @@
 ---
 title: "Hurdler 2.0"
-publishedAt: "2025-09-15"
-summary: "A ReactJS-based visualization of Dijkstra’s algorithm with dynamic UI, simulating real-world shortest-path computations."
-images:
-  - "/images/projects/project-01/optimized/hurdler2.0.mp4"
+publishedAt: "2022-01-01"
+summary: "An e-learning tool that visualizes Dijkstra's algorithm: build walls, add hurdles and weights, and watch the pathfinding run."
+visual: "pathfinding"
+period: "Side project"
+images: []
+metrics:
+  - value: "Dijkstra"
+    label: "visualized live"
+  - value: "Walls + weights"
+    label: "interactive grid"
+stack: ["React", "JavaScript", "Algorithms"]
 team:
   - name: "Anurag Singh"
-    role: "Frontend Developer"
+    role: "Developer"
     avatar: "/images/avatar.jpg"
-    linkedIn: "https://www.linkedin.com/in/anurag-singh/"
+    linkedIn: "https://www.linkedin.com/in/anurag-s01/"
 ---
+
 
 ## Overview
 
@@ -44,8 +52,8 @@ Hurdler 2.0 is an interactive web application designed to visualize Dijkstra's a
 
 The core of the application is the Dijkstra algorithm implementation. Here is a simplified snippet of the logic:
 
-<Terminal title="Dijkstra.js">
-{`function dijkstra(grid, startNode, finishNode) {
+```Dijkstra.js
+function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
@@ -64,8 +72,8 @@ The core of the application is the Dijkstra algorithm implementation. Here is a 
     
     updateUnvisitedNeighbors(closestNode, grid);
   }
-}`}
-</Terminal>
+}
+```
 
 ## Challenges
 

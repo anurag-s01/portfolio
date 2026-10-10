@@ -1,12 +1,13 @@
 import React, { use } from 'react';
 
-import { Heading, Flex, Text, Button, Avatar, RevealFx, Arrow } from '@/once-ui/components';
+import { Heading, Flex, Text, Button, Grid } from '@/once-ui/components';
+import { CountUp, Reveal, WordReveal } from '@/components/motion/primitives';
 import { Projects } from '@/components/work/Projects';
 
 import { baseURL, routes, renderContent } from '@/app/resources';
-import { Mailchimp } from '@/components';
-import { Posts } from '@/components/blog/Posts';
 import { Certificates } from '@/components/home/Certificates';
+import { LiquidMetalHero } from '@/components/home/LiquidMetalHero';
+import { OpenLane } from '@/components/home/OpenLane';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 
@@ -26,11 +27,12 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
     return {
 		title,
 		description,
+		alternates: { canonical: `https://${baseURL}` },
 		openGraph: {
 			title,
 			description,
 			type: 'website',
-			url: `https://${baseURL}/${locale}`,
+			url: `https://${baseURL}`,
 			images: [
 				{
 					url: ogImage,
@@ -56,7 +58,7 @@ export default function Home(props: { params: Promise<{ locale: string }> }) {
 
     setRequestLocale(locale);
     const t = useTranslations();
-    const { home, about, person, newsletter } = renderContent(t);
+    const { home, person, social } = renderContent(t);
     return (
 		<Flex
 			maxWidth="m" fillWidth gap="xl"
@@ -71,99 +73,106 @@ export default function Home(props: { params: Promise<{ locale: string }> }) {
 						name: home.title,
 						description: home.description,
 						url: `https://${baseURL}`,
-						image: `${baseURL}/og?title=${encodeURIComponent(home.title)}`,
+						image: `https://${baseURL}/og?title=${encodeURIComponent(home.title)}`,
 						publisher: {
 							'@type': 'Person',
 							name: person.name,
 							image: {
 								'@type': 'ImageObject',
-								url: `${baseURL}${person.avatar}`,
+								url: `https://${baseURL}${person.avatar}`,
 							},
 						},
 					}),
 				}}
 			/>
+			<LiquidMetalHero>
 			<Flex
 				fillWidth
 				direction="column"
-				paddingY="l" gap="m">
+				paddingY="xl" gap="l">
 				<Flex
 					direction="column"
 					fillWidth maxWidth="s" gap="m">
-					<RevealFx
-						translateY="4">
-						<Heading
-							wrap="balance"
-							variant="display-strong-l">
-							{home.headline}
-						</Heading>
-					</RevealFx>
-					<RevealFx
-						translateY="8" delay={0.2}>
-						<Flex fillWidth>
-							<Text
-								wrap="balance"
-								onBackground="neutral-weak"
-								variant="heading-default-xl">
-								{home.subline}
-							</Text>
+					<Reveal y={8}>
+						<Flex
+							gap="8" alignItems="center" paddingX="12" paddingY="4" radius="full"
+							border="neutral-medium" borderStyle="solid-1" background="surface"
+							style={{ width: 'fit-content' }}>
+							<span className="pulse-dot" aria-hidden />
+							<Text variant="label-default-s" onBackground="neutral-medium">{person.role} at Jubilant FoodWorks</Text>
 						</Flex>
-					</RevealFx>
-					<RevealFx translateY="12" delay={0.4}>
-						<Flex fillWidth gap="s">
+					</Reveal>
+					<Heading
+						wrap="balance"
+						variant="display-strong-l">
+						<WordReveal text={home.headline} delay={0.1} />
+					</Heading>
+					<Reveal y={12} delay={0.5}>
+						<Text
+							wrap="balance"
+							onBackground="neutral-weak"
+							variant="heading-default-xl">
+							{home.subline}
+						</Text>
+					</Reveal>
+					<Reveal y={12} delay={0.7}>
+						<Flex fillWidth gap="s" wrap>
+							{/* The floating "Get in touch" button docks here at the top of the page (see FloatingContact). */}
+							<span data-cta-slot aria-hidden style={{ display: 'inline-block', width: 144, height: 44 }} />
 							<Button
-								id="about"
-								data-border="rounded"
-								href={`/${locale}/about`}
-								variant="tertiary"
-								size="m">
-								<Flex
-									gap="8"
-									alignItems="center">
-									{about.avatar.display && (
-										<Avatar
-											style={{ marginLeft: '-0.75rem', marginRight: '0.25rem' }}
-											src={person.avatar}
-											size="m" />
-									)}
-									{t("about.title")}
-									<Arrow trigger="#about" />
-								</Flex>
-							</Button>
-							<Button
-								id="resume"
 								data-border="rounded"
 								href="/docs/Resume_Anurag.pdf"
 								target="_blank"
-								variant="primary"
+								variant="tertiary"
 								size="m">
 								Download Resume
 							</Button>
 						</Flex>
-					</RevealFx>
+					</Reveal>
 				</Flex>
-
+				<Grid
+					columns="repeat(4, 1fr)" tabletColumns="2col" mobileColumns="2col"
+					gap="m" fillWidth marginTop="l">
+					{home.stats.map((stat, i) => (
+						<Reveal key={stat.label} delay={0.8 + i * 0.1}>
+							<Flex direction="column" gap="4">
+								<Text variant="display-strong-s" onBackground="brand-medium">
+									<CountUp value={stat.value} suffix={stat.suffix} />
+								</Text>
+								<Text variant="body-default-s" onBackground="neutral-weak">{stat.label}</Text>
+							</Flex>
+						</Reveal>
+					))}
+				</Grid>
 			</Flex>
-			<RevealFx translateY="32" delay={0.2}>
-				<Flex direction="column" fillWidth alignItems="center" gap="m">
-					<Projects range={[1, 2]} locale={locale} />
-					<Button 
-						href={`/${locale}/work`} 
-						variant="tertiary" 
-						size="m" 
+			</LiquidMetalHero>
+			<Flex direction="column" fillWidth gap="l" style={{ position: 'relative', zIndex: 1 }}>
+				<Reveal>
+					<Flex fillWidth paddingX="l" justifyContent="space-between" alignItems="flex-end" gap="m" wrap>
+						<Heading variant="display-strong-s">Selected work</Heading>
+					</Flex>
+				</Reveal>
+				<Projects range={[1, 4]} locale={locale} />
+				<Flex fillWidth justifyContent="center">
+					<Button
+						href={`/${locale}/work`}
+						variant="tertiary"
+						size="m"
 						data-border="rounded"
+						suffixIcon="chevronRight"
 						style={{ backdropFilter: 'blur(10px)', background: 'var(--neutral-alpha-weak)', marginTop: '-1rem' }}>
-						Explore Curated Work
+						View all projects
 					</Button>
 				</Flex>
-			</RevealFx>
-			
-			<RevealFx translateY="32" delay={0.4}>
-				<Certificates />
-			</RevealFx>
-			{newsletter.display &&
-				<Mailchimp newsletter={newsletter} />
-			}
+			</Flex>
+			<Flex fillWidth style={{ position: 'relative', zIndex: 1 }}>
+				<Certificates awards={home.awards} />
+			</Flex>
+			<Flex fillWidth style={{ position: 'relative', zIndex: 1 }}>
+				<OpenLane
+					email={social.find((s) => s.icon === 'email')!.link.replace('mailto:', '')}
+					linkedin={social.find((s) => s.icon === 'linkedin')!.link} />
+			</Flex>
 		</Flex>
 	);
 }

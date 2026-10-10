@@ -1,0 +1,94 @@
+.stage {
+    position: relative;
+    width: min(640px, 100%);
+    aspect-ratio: 1;
+    margin: 0 auto var(--static-space-64);
+    container-type: inline-size; // lets the centre text scale with the ring (cqi units below)
+    // Orb diameter scales with the ring: 44px on small phones up to 76px.
+    --orb: clamp(44px, 12%, 76px);
+}
+
+.ring {
+    position: absolute;
+    inset: 0;
+}
+
+// One grid cell filling the stage: the title (or hovered skill) sits at the exact centre.
+.center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+// Sized from the ring's width (cqi), so it always clears the orbs.
+.title {
+    grid-area: 1 / 1;
+    max-width: 54%;
+    margin: 0;
+    text-align: center;
+    font-size: min(8cqi, 40px);
+    font-weight: 560;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    color: var(--neutral-on-background-strong);
+}
+
+.hint {
+    font-size: min(3.6cqi, 14px);
+    color: var(--neutral-on-background-weak);
+}
+
+// --cx/--cy are the orb's unit-circle position; the ring is square, so % works on both axes.
+.slot {
+    position: absolute;
+    width: var(--orb);
+    height: var(--orb);
+    left: calc(50% + var(--cx) * (50% - var(--orb) / 2 - 4px) - var(--orb) / 2);
+    top: calc(50% + var(--cy) * (50% - var(--orb) / 2 - 4px) - var(--orb) / 2);
+}
+
+// Dark liquid-metal sphere: specular highlight, warm rim light from the brand colour.
+.orb {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutral-on-background-strong);
+    cursor: default;
+    outline: none;
+    // Liquid-glass sphere: specular highlight, brand-tinted caustic at the bottom, translucent body.
+    background:
+        radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 22%),
+        radial-gradient(circle at 68% 88%, color-mix(in srgb, var(--accent-solid-strong) 45%, transparent), transparent 50%),
+        color-mix(in srgb, var(--page-background) 40%, transparent);
+    backdrop-filter: blur(10px) saturate(170%);
+    -webkit-backdrop-filter: blur(10px) saturate(170%);
+    box-shadow:
+        inset 0 -8px 16px color-mix(in srgb, var(--accent-solid-strong) 18%, transparent),
+        inset 0 6px 10px rgba(255, 255, 255, 0.25),
+        0 0 0 1px var(--neutral-alpha-medium),
+        0 12px 28px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+
+    svg {
+        width: 42%;
+        height: 42%;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+    }
+
+    &:hover,
+    &:focus {
+        box-shadow:
+            inset 0 -8px 16px color-mix(in srgb, var(--accent-solid-strong) 25%, transparent),
+            inset 0 6px 10px rgba(255, 255, 255, 0.3),
+            0 0 0 1px var(--accent-solid-strong),
+            0 0 28px var(--brand-alpha-strong);
+    }
+}

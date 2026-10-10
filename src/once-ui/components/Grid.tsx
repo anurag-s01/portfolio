@@ -18,7 +18,7 @@ interface ComponentProps extends
     ConditionalProps {}
 
 const Grid = forwardRef<HTMLDivElement, ComponentProps>(({
-    as: Component = 'div',
+    as = 'div',
     columns,
     rows,
     gap,
@@ -141,6 +141,9 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(({
         zIndex,
         ...style,
     };
+
+    // Typed as 'div' so react-three's JSX elements don't widen the props union to never.
+    const Component = as as 'div';
 
     return (
         <Component

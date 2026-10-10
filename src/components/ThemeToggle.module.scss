@@ -1,0 +1,29 @@
+.toggle {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid var(--neutral-alpha-medium);
+    background: var(--neutral-alpha-weak);
+    color: var(--neutral-on-background-strong);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            background: var(--neutral-alpha-medium);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--accent-solid-strong);
+        outline-offset: 2px;
+    }
+}

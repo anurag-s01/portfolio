@@ -1,53 +1,44 @@
 ---
 title: "Enterprise Notification Platform"
-publishedAt: "2025-10-01"
-summary: "A scalable, event-driven multi-tenant notification platform handling millions of requests per day for Domino's and other brands."
-images:
-  - "/images/projects/project-01/cover-01.png"
+publishedAt: "2026-03-01"
+summary: "The event-driven, multi-tenant platform behind every customer communication across all 5 JFL brands, peaking at 134K requests per minute."
+visual: "notifications"
+period: "Jubilant FoodWorks, 2023–25"
+images: []
+metrics:
+  - value: "134K"
+    label: "req / min peak"
+  - value: "5"
+    label: "brands, 5 channels"
+  - value: "11+"
+    label: "vendor integrations replaced"
+stack: ["Java", "Spring Boot", "Kafka", "MongoDB", "Resilience4j"]
 team:
   - name: "Anurag Singh"
     role: "Software Engineer"
     avatar: "/images/avatar.jpg"
-    linkedIn: "https://www.linkedin.com/in/anurag-singh/"
+    linkedIn: "https://www.linkedin.com/in/anurag-s01/"
 ---
 
-## Overview
 
-Engineered an in-house scalable, event-driven multi-tenant and multi-app Notification Platform adopted by all Jubilant FoodWorks brands. The system enables real-time multichannel delivery (SMS, Push, Email, WhatsApp) with robust fallback and traffic diversion mechanisms.
+## The problem
 
-## Key Features
+Domino's India talked to customers through 11+ isolated vendor integrations with no fallback. If a vendor degraded, messages were simply lost, and every team re-implemented templates and tracking.
 
-- **High Scale**: Handles millions of requests per day with high availability.
-- **Multi-Channel**: Supports SMS, Push Notifications, Email, WhatsApp, and Live Notifications.
-- **Resilience**: Implemented fallback mechanisms and traffic diversion to ensure delivery.
-- **Event-Driven**: Built using Kafka for asynchronous processing and decoupling.
+## What I built
 
-## Tech Stack
+A multi-tenant, event-driven platform on Kafka and Spring Boot, now adopted by all 5 JFL brands:
 
-<Flex gap="8" wrap="wrap" marginBottom="24">
-    <Badge variant="neutral">Java</Badge>
-    <Badge variant="neutral">Spring Boot</Badge>
-    <Badge variant="neutral">Kafka</Badge>
-    <Badge variant="neutral">MongoDB</Badge>
-    <Badge variant="neutral">Resilience4j</Badge>
-    <Badge variant="neutral">Docker</Badge>
-</Flex>
+- **Five channels**: SMS, Push, Email, WhatsApp and Live Activities behind one API.
+- **Template management** shared across brands and teams.
+- **Multi-vendor fallback** so a degraded provider no longer means lost messages.
+- **Every request tracked** for billing and audit.
 
-## Architecture Highlights
+## Making the hot path fast
 
-The platform uses a microservices architecture where the core notification service consumes events from Kafka topics. It then routes these notifications to the appropriate vendor providers (e.g., FCM for push, Twilio for SMS) based on configuration and health status.
-
-<Terminal title="System Metrics">
-{`INFO  [NotificationService] Processing batch of 5000 events
-INFO  [KafkaConsumer] Consumed message: { type: "ORDER_UPDATE", userId: "u123", channel: "PUSH" }
-WARN  [VendorProvider] Primary SMS provider latency high (>200ms). Switching to fallback.
-INFO  [CircuitBreaker] Circuit 'sms-primary' OPEN.
-INFO  [VendorProvider] Routing traffic to Secondary SMS provider.
-INFO  [Metrics] Delivery Rate: 99.98% | Avg Latency: 45ms`}
-</Terminal>
+I reduced MongoDB query latency on the notification hot path from **18.7ms to 3.9ms (79%)** by profiling queries, redesigning indexes and trimming projections. Traffic later grew on the same infrastructure.
 
 ## Impact
 
-- **Reliability**: Significantly improved notification delivery rates during peak traffic (e.g., New Year's Eve).
-- **Cost Efficiency**: Optimized vendor usage through intelligent routing.
-- **Developer Experience**: Unified API for all internal teams to send notifications.
+- Handles **millions of requests a day**, peaking at **134K per minute**.
+- Recognized with a **Silver Award** and the **Star Employee** award.

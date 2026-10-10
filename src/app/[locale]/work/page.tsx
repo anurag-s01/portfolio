@@ -1,6 +1,8 @@
 import { use } from "react";
 import { getPosts } from '@/app/utils/utils';
-import { Flex } from '@/once-ui/components';
+import { Flex, Heading, Text } from '@/once-ui/components';
+import { Reveal } from '@/components/motion/primitives';
+import { TitleBand } from '@/components/backgrounds/PageBackdrop';
 import { Projects } from '@/components/work/Projects';
 import { baseURL, renderContent } from '@/app/resources';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -23,11 +25,12 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
     return {
 		title,
 		description,
+		alternates: { canonical: `https://${baseURL}/work` },
 		openGraph: {
 			title,
 			description,
 			type: 'website',
-			url: `https://${baseURL}/${locale}/work/`,
+			url: `https://${baseURL}/work`,
 			images: [
 				{
 					url: ogImage,
@@ -70,8 +73,8 @@ export default function Work(props: { params: Promise<{ locale: string }>}) {
                         '@type': 'CollectionPage',
                         headline: work.title,
                         description: work.description,
-                        url: `https://${baseURL}/projects`,
-                        image: `${baseURL}/og?title=Design%20Projects`,
+                        url: `https://${baseURL}/work`,
+                        image: `https://${baseURL}/og?title=${encodeURIComponent(work.title)}`,
                         author: {
                             '@type': 'Person',
                             name: person.name,
@@ -80,12 +83,24 @@ export default function Work(props: { params: Promise<{ locale: string }>}) {
                             '@type': 'CreativeWork',
                             headline: project.metadata.title,
                             description: project.metadata.summary,
-                            url: `https://${baseURL}/projects/${project.slug}`,
-                            image: `${baseURL}/${project.metadata.image}`,
+                            url: `https://${baseURL}/work/${project.slug}`,
+                            image: `https://${baseURL}/og?title=${encodeURIComponent(project.metadata.title)}`,
                         })),
                     }),
                 }}
             />
+            <TitleBand>
+            <Flex direction="column" gap="m" paddingX="l" paddingY="xl">
+                <Reveal>
+                    <Heading variant="display-strong-l">{work.title}</Heading>
+                </Reveal>
+                <Reveal delay={0.1}>
+                    <Text variant="heading-default-xl" onBackground="neutral-weak" wrap="balance">
+                        {allProjects.length} systems I've built, from campaign engines to real-time store operations. Each one animates what it actually does.
+                    </Text>
+                </Reveal>
+            </Flex>
+            </TitleBand>
             <Projects locale={locale}/>
         </Flex>
     );

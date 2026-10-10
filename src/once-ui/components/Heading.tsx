@@ -36,7 +36,7 @@ const Heading = <T extends ElementType = 'h1'>({
     className,
     ...props
 }: HeadingProps<T>) => {
-    const Component = as || 'h1';
+    const Component = (as || 'h1') as 'h1';
 
     if (variant && (size || weight)) {
         console.warn("When 'variant' is set, 'size' and 'weight' are ignored.");

@@ -1,4 +1,3 @@
-import { InlineCode } from "@/once-ui/components";
 
 const person = {
     firstName: 'Anurag',
@@ -11,12 +10,6 @@ const person = {
     location: 'Asia/Kolkata',        // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
     residence: 'India',
     languages: []  // optional: Leave the array empty if you don't want to display languages
-}
-
-const newsletter = {
-    display: false,
-    title: <>Subscribe to {person.firstName}'s Newsletter</>,
-    description: <>I occasionally write about design, technology, and share thoughts on the intersection of creativity and engineering.</>
 }
 
 const social = [
@@ -46,16 +39,27 @@ const social = [
 
 const home = {
     label: 'Home',
-    title: `${person.name}'s Portfolio`,
-    description: `Portfolio website showcasing my work as a ${person.role}`,
-    headline: <>Software engineer and builder</>,
-    subline: <>I'm Anurag, a Senior Software Engineer at <InlineCode>Jubilant FoodWorks</InlineCode> with a focus on building scalable, high-performance systems.<br /> Outside of work, I stay engaged with new technologies and explore ways to innovate and improve software development processes.</>
+    title: `${person.name} – ${person.role} | Portfolio`,
+    description: `${person.name}, ${person.role} building distributed systems, event-driven platforms and large-scale microservices at Jubilant FoodWorks (Domino's India).`,
+    headline: 'Building backends that carry millions of orders',
+    subline: <>I'm Anurag, a Senior Software Engineer at Jubilant FoodWorks (Domino's India). I architect distributed systems at scale: event-driven, multi-tenant platforms and microservices that hold up under peak traffic and turn slow, manual processes into self-serve products.</>,
+    stats: [
+        { value: 100, suffix: '+', label: 'campaign changes / qtr, zero deploys' },
+        { value: 2500, suffix: '+', label: 'stores load-managed' },
+        { value: 80, suffix: '%', label: 'p99 latency cut' },
+        { value: 5, suffix: '', label: 'brands on one platform' },
+    ],
+    awards: [
+        { title: '5× Silver Award', description: 'TWID pay-by-rewards, campaign and delivery-charge platform, cross-brand notification platform, Domino\'s–Zomato IRCTC, multi-tenancy program.' },
+        { title: 'Star Employee', description: 'Recognized for impact on the notification platform and train-ordering launches.' },
+        { title: 'Chairperson\'s Award Nominee 2025', description: 'Best Market Maker of the Year, for the flat-price menu capability.' },
+    ]
 }
 
 const about = {
     label: 'About',
     title: 'About me',
-    description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+    description: `Meet ${person.name}, ${person.role} from ${person.residence}`,
     tableOfContent: {
         display: true,
         subItems: false
@@ -70,33 +74,34 @@ const about = {
     intro: {
         display: true,
         title: 'Introduction',
-        description: <>Anurag is a India-based software engineer with a passion for delivering robust, scalable systems that address real-world challenges. His work combines technical expertise with a strong problem-solving approach to create high-impact software that drives business success.</>
+        description: <>Anurag is an India-based backend engineer who builds the systems behind Domino's India: campaign engines, communication platforms, payments and real-time store operations. He likes turning manual, deployment-heavy processes into self-serve platforms, and making hot paths measurably faster.</>
     },
     work: {
         display: true, // set to false to hide this section
         title: 'Work Experience',
         experiences: [
             {
-                company: 'Jubilant FoodWorks Ltd.',
+                company: 'Jubilant FoodWorks',
                 timeframe: 'Aug 2025 - Present',
                 role: 'Senior Software Engineer',
                 achievements: [
-                    <>Architected a zero-deployment, multi-tenant Campaign Engine microservice with a custom rule evaluation core for complex condition schemas, enabling real-time cart personalization and dynamic promotions for millions of daily user sessions.</>,
-                    <>Digitized Corporate Orders end-to-end from a fully offline process to a self-serve online platform, eliminating manual fulfillment overhead and expanding B2B revenue.</>,
-                    <>Grew Domino's active payment channels by integrating Swiggy Toing with core ordering backend and onboarding Razorpay and VIPL eVoucher payment partners.</>
+                    <>Built a multi-tenant Campaign Engine in Java and Spring Boot with a custom rule-evaluation core, absorbing 100+ campaign changes per quarter with zero deployments. Personalized packaging and COD charge campaigns on it lifted new-user conversion ~16% in the first month.</>,
+                    <>Cut p99 latency from 29.4ms to 5.8ms (80%) and average latency from 14.6ms to 2.6ms on an ordering-path service by removing an N+1 query and adding an in-memory cache.</>,
+                    <>Automated operational-load mitigation across 2,500+ stores with a real-time platform that ingests customer, rider and order events through Kafka, scores per-store load against a predictive model, and triggers graduated mitigations over RabbitMQ.</>,
+                    <>Added 4+ payment and partner integrations: TWID loyalty points as a new tender across cash, card, UPI and wallet flows, plus Razorpay, VIPL eVoucher and Swiggy Toing.</>,
+                    <>Moved corporate ordering from an offline, manual process to a self-serve platform taking orders of up to 1,000 unique items without adding load to store systems.</>
                 ],
                 images: []
             },
             {
-                company: 'Jubilant FoodWorks Ltd.',
-                timeframe: 'July 2023 - July 2025',
+                company: 'Jubilant FoodWorks',
+                timeframe: 'Jul 2023 - Jul 2025',
                 role: 'Software Engineer',
                 achievements: [
-                    <>Unified all JFL brand notifications into a centralized, event-driven, multi-tenant Notification Platform on Kafka and Spring Boot, processing millions of requests/day across 5 channels.</>,
-                    <>Extended Domino's ordering reach to India's rail passenger network by integrating Zomato IRCTC Train Orders via a dynamic template-driven backend.</>,
-                    <>Boosted IRCTC flow conversion rate by 230 bps and grew train order volume by 25% by leading a complete backend revamp to a Next-Gen Train Ordering Flow.</>,
-                    <>Cut MongoDB query latency by 79% (18.7ms to 3.9ms) and reduced request handling overhead by 91% through advanced query profiling and index strategy redesign.</>,
-                    <>Drove up to 49% uplift in campaign-driven conversions by shipping Flat Price Menu - a feature with time- and region-scoped feature toggles and A/B experimentation.</>
+                    <>Built the platform behind every customer communication across all 5 JFL brands, replacing 11+ isolated vendor integrations. Multi-tenant and event-driven on Kafka and Spring Boot, serving SMS, Push, Email, WhatsApp and Live Activities with multi-vendor fallback, handling millions of requests a day.</>,
+                    <>Reduced MongoDB query latency from 18.7ms to 3.9ms (79%) on the notification hot path by profiling queries, redesigning indexes and trimming projections.</>,
+                    <>Rebuilt the Domino's–IRCTC train ordering backend end to end on a template-driven design, expanding reach through Zomato and raising flow conversion 230 bps and train order volume 25%.</>,
+                    <>Shipped a flat-price menu with time and region controls and A/B testing, driving up to 49% more campaign-driven conversions.</>
                 ],
                 images: []
             },
@@ -105,17 +110,17 @@ const about = {
                 timeframe: 'Jan 2023 - Jun 2023',
                 role: 'Graduate Engineering Trainee',
                 achievements: [
-                    <>Hardened reliability of core BAU microservices by implementing circuit breakers via Resilience4j and executing a Java and Spring Boot version upgrade.</>,
-                    <>Eliminated high-severity CVEs across the microservices estate by integrating OWASP Dependency-Check into CI/CD pipelines.</>
+                    <>Added Resilience4j circuit breakers to 3 core order-processing services and upgraded Java and Spring Boot across 8+ services.</>,
+                    <>Moved dependency scanning into CI/CD with OWASP Dependency-Check across 8+ services and fixed the high-severity CVEs it surfaced.</>
                 ],
                 images: []
             },
             {
                 company: 'Standard Chartered',
-                timeframe: 'May 2022 - July 2022',
+                timeframe: '2022',
                 role: 'Technology Intern',
                 achievements: [
-                    <>Reduced corporate payment file validation errors and manual review cycles by delivering a full-stack solution - a custom Java-based JSON validator with automated failure-detail reporting and a React.js web interface.</>
+                    <>Built an in-house Java validator for corporate payment files in JSON and CSV, replacing a third-party tool, with a React interface showing which records failed and why.</>
                 ],
                 images: []
             }
@@ -126,8 +131,8 @@ const about = {
         title: 'Education',
         institutions: [
             {
-                name: 'National Institue of Technology, Jamshedpur',
-                description: <>Studied Computer Science & Engineering.</>,
+                name: 'National Institute of Technology, Jamshedpur',
+                description: <>B.Tech with Honors, Computer Science and Engineering. CGPA 8.44/10, 2023.</>,
             }
         ]
     },
@@ -136,31 +141,28 @@ const about = {
         title: 'Technical skills',
         skills: [
             { title: "Java", icon: 'java' },
-            { title: "C++", icon: 'cpp' },
             { title: "Spring Boot", icon: 'springboot' },
+            { title: "Spring Batch", icon: 'spring' },
             { title: "Apache Kafka", icon: 'apacheKafka' },
-            { title: "MySQL", icon: "mysql" },
+            { title: "RabbitMQ", icon: 'rabbitmq' },
             { title: "MongoDB", icon: "mongoDB" },
+            { title: "MySQL", icon: "mysql" },
             { title: "Aerospike", icon: "aerospike" },
+            { title: "Elasticsearch", icon: "elasticsearch" },
             { title: "AWS", icon: "aws" },
             { title: "Docker", icon: "docker" },
+            { title: "Grafana", icon: "grafana" },
+            { title: "Datadog", icon: "datadog" },
+            { title: "C++", icon: 'cpp' },
             { title: "Git", icon: "git" }
-        ]
+        ],
     }
-}
-
-const blog = {
-    label: 'Blog',
-    title: 'Writing about design and tech...',
-    description: `Read what ${person.name} has been up to recently`
-    // Create new blog posts by adding a new .mdx file to app/blog/posts
-    // All posts will be listed on the /blog route
 }
 
 const work = {
     label: 'Work',
-    title: 'My projects',
-    description: `Design and dev projects by ${person.name}`
+    title: 'Selected work',
+    description: `Backend systems and projects built by ${person.name}`
     // Create new project pages by adding a new .mdx file to app/blog/posts
     // All projects will be listed on the /home and /work routes
 }
@@ -279,4 +281,4 @@ const gallery = {
     ]
 }
 
-export { person, social, newsletter, home, about, blog, work, gallery };
+export { person, social, home, about, work, gallery };
