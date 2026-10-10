@@ -1,0 +1,38 @@
+---
+title: "Real-time Store Load Mitigation"
+publishedAt: "2026-02-01"
+summary: "A real-time evaluation platform that scores operational load for 2,500+ stores and triggers graduated mitigations automatically."
+visual: "store-load"
+period: "Jubilant FoodWorks, 2025–26"
+images: []
+metrics:
+  - value: "2,500+"
+    label: "stores"
+  - value: "Real-time"
+    label: "per-store scoring"
+  - value: "Automated"
+    label: "graduated mitigation"
+stack: ["Java", "Spring Boot", "Kafka", "RabbitMQ"]
+team:
+  - name: "Anurag Singh"
+    role: "Senior Software Engineer"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/anurag-s01/"
+---
+
+
+## The problem
+
+When a store gets overloaded, every minute of manual reaction means late orders. Mitigation across a fleet of 2,500+ stores could not depend on people watching dashboards.
+
+## What I built
+
+A real-time evaluation platform that:
+
+- **Ingests live customer, rider and order events** through Kafka.
+- **Scores per-store load** against a predictive model.
+- **Triggers graduated mitigations** over RabbitMQ, escalating only as far as the load requires.
+
+## Impact
+
+- Operational-load mitigation is **automated across 2,500+ stores**.

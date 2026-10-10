@@ -5,6 +5,9 @@ import { useEffect, useState, useTransition } from "react";
 
 import { Flex, ToggleButton } from "@/once-ui/components"
 import styles from '@/components/Header.module.scss'
+import { NavBar } from '@/components/NavBar'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { KbarTrigger } from '@/components/Kbar'
 
 import { routes, display } from '@/app/resources'
 
@@ -68,7 +71,7 @@ export const Header = () => {
     }
 
     const t = useTranslations();
-    const { person, home, about, blog, work, gallery } = renderContent(t);
+    const { person, home, about, work, gallery } = renderContent(t);
 
     return (
         <>
@@ -94,62 +97,19 @@ export const Header = () => {
                     )}
                 </Flex>
                 <Flex fillWidth justifyContent="center">
-                    <Flex
-                        background="surface" border="neutral-medium" borderStyle="solid-1" radius="m-4" shadow="l"
-                        padding="4"
-                        justifyContent="center">
-                        <Flex
-                            gap="4"
-                            textVariant="body-default-s">
-                            { routes['/'] && (
-                                <ToggleButton
-                                    prefixIcon="home"
-                                    href={`/${params?.locale}`}
-                                    selected={pathname === "/"}>
-                                    <Flex paddingX="2" hide="s">{home.label}</Flex>
-                                </ToggleButton>
-                            )}
-                            { routes['/about'] && (
-                                <ToggleButton
-                                    prefixIcon="person"
-                                    href={`/${params?.locale}/about`}
-                                    selected={pathname === "/about"}>
-                                    <Flex paddingX="2" hide="s">{about.label}</Flex>
-                                </ToggleButton>
-                            )}
-                            { routes['/work'] && (
-                                <ToggleButton
-                                    prefixIcon="grid"
-                                    href={`/${params?.locale}/work`}
-                                    selected={pathname.startsWith('/work')}>
-                                    <Flex paddingX="2" hide="s">{work.label}</Flex>
-                                </ToggleButton>
-                            )}
-                            { routes['/blog'] && (
-                                <ToggleButton
-                                    prefixIcon="book"
-                                    href={`/${params?.locale}/blog`}
-                                    selected={pathname.startsWith('/blog')}>
-                                    <Flex paddingX="2" hide="s">{blog.label}</Flex>
-                                </ToggleButton>
-                            )}
-                            { routes['/gallery'] && (
-                                <ToggleButton
-                                    prefixIcon="gallery"
-                                    href={`/${params?.locale}/gallery`}
-                                    selected={pathname.startsWith('/gallery')}>
-                                    <Flex paddingX="2" hide="s">{gallery.label}</Flex>
-                                </ToggleButton>
-                            )}
-                        </Flex>
-                    </Flex>
+                    <NavBar items={[
+                        { href: '/', label: home.label, icon: 'home', active: pathname === '/', on: routes['/'] },
+                        { href: '/about', label: about.label, icon: 'person', active: pathname === '/about', on: routes['/about'] },
+                        { href: '/work', label: work.label, icon: 'grid', active: pathname.startsWith('/work'), on: routes['/work'] },
+                        { href: '/gallery', label: gallery.label, icon: 'gallery', active: pathname.startsWith('/gallery'), on: routes['/gallery'] },
+                    ].filter((item) => item.on)} />
                 </Flex>
                 <Flex fillWidth justifyContent="flex-end" alignItems="center">
                     <Flex
-                        paddingRight="12"
+                        paddingRight="12" paddingLeft="8"
                         justifyContent="flex-end" alignItems="center"
                         textVariant="body-default-s"
-                        gap="20">
+                        gap="8">
                         {routing.locales.length > 1 &&
                             <Flex
                                 background="surface" border="neutral-medium" borderStyle="solid-1" radius="m-4" shadow="l"
@@ -172,6 +132,8 @@ export const Header = () => {
                                 <TimeDisplay timeZone={person.location}/>
                             )}
                         </Flex>
+                        <KbarTrigger />
+                        <ThemeToggle />
                     </Flex>
                 </Flex>
             </Flex>

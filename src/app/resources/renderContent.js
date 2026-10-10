@@ -1,22 +1,6 @@
-import { person, newsletter, social, home, about, blog, work, gallery } from './content';
-import { createI18nContent } from './content-i18n';
-import { i18n } from './config';
+import { person, social, home, about, work, gallery } from './content';
 
-const renderContent = (t) => {
-    if ( i18n ) {
-        return createI18nContent(t);
-    } else {
-        return {
-            person,
-            social,
-            newsletter,
-            home,
-            about,
-            blog,
-            work,
-            gallery
-        }
-    }
-};
+// `t` is kept in the signature for the next-intl call sites; content comes from content.js.
+const renderContent = (_t) => ({ person, social, home, about, work, gallery });
 
 export { renderContent };

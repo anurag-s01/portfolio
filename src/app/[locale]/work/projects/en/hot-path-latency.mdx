@@ -1,0 +1,36 @@
+---
+title: "Hot-path Latency: −80% p99"
+publishedAt: "2026-01-01"
+summary: "Cut p99 latency from 29.4ms to 5.8ms on a service peaking at 155K requests per minute."
+visual: "latency"
+period: "Jubilant FoodWorks, 2025–26"
+images: []
+metrics:
+  - value: "29.4→5.8ms"
+    label: "p99 latency"
+  - value: "14.6→2.6ms"
+    label: "average latency"
+  - value: "155K"
+    label: "req / min peak"
+stack: ["Java", "Spring Boot", "Profiling", "Caching"]
+team:
+  - name: "Anurag Singh"
+    role: "Senior Software Engineer"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/anurag-s01/"
+---
+
+
+## The problem
+
+A service on the ordering path peaks at 155K requests per minute. At that volume, every millisecond of p99 compounds into the calls that depend on it.
+
+## What I changed
+
+- **Removed an N+1 query** that issued a lookup per item instead of one batched read.
+- **Added an in-memory cache** for data that rarely changes but was read on every request.
+
+## Impact
+
+- **p99 latency**: 29.4ms → **5.8ms** (−80%)
+- **Average latency**: 14.6ms → **2.6ms**

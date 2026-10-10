@@ -1,31 +1,38 @@
 ---
 title: "Train Ordering Revamp"
-publishedAt: "2024-06-10"
-summary: "Spearheaded the NextGen Cart migration and the Zomato IRCTC integration, revolutionizing train order flow and unlocking massive acquisition channels."
-images:
-  - "/images/projects/train-revamp-india.png"
+publishedAt: "2025-06-01"
+summary: "Brought Zomato's train orders to Domino's on a template-driven design, and revamped how the order management service integrates with NXG cart for train orders."
+visual: "train"
+period: "Jubilant FoodWorks, 2023–25"
+images: []
+metrics:
+  - value: "+230 bps"
+    label: "flow conversion"
+  - value: "+25%"
+    label: "train order volume"
+  - value: "Zomato"
+    label: "new channel"
+stack: ["Java", "Spring Boot", "Templates", "Integrations"]
 team:
   - name: "Anurag Singh"
     role: "Software Engineer"
     avatar: "/images/avatar.jpg"
-    linkedIn: "https://www.linkedin.com/in/anurag-singh/"
+    linkedIn: "https://www.linkedin.com/in/anurag-s01/"
 ---
 
 ## Overview
 
-Led a comprehensive revamp of Domino's train ordering logistics, consisting of two major milestones: the fundamental architectural migration to the NextGen Cart, and the high-impact integration with Zomato IRCTC. Together, these spanning goals modernized the checkout experience and significantly extended delivery reach across India's rail network.
+Two main pieces of work, alongside other optimisations to the train ordering flow.
 
-## NextGen Cart Migration
+## Zomato train orders
 
-- **Cart Architecture Overhaul**: Completely refactored cart state management to handle complex prerequisites like PNR validation and strict station delivery timings.
-- **Advanced Capabilities**: Unlocked targeted promotions and enhanced cross-selling tailored specifically for train journeys, drastically reducing drop-offs in low-connectivity areas.
+I integrated Zomato for train orders, so passengers can order Domino's on Zomato and have it delivered to their seat on the train. The integration is template-driven, which keeps the partner-specific parts in configuration rather than code.
 
-## Zomato IRCTC Integration
+## Order management with NXG cart
 
-- **Third-Party Extensibility**: Engineered an optimized API template system to seamlessly integrate Domino's ordering ecosystem directly into the Zomato app.
-- **Reliable Handoffs**: Designed an end-to-end processing pipeline that synchronized cross-platform status updates in real-time, handling massive traffic spikes.
+I revamped how the order management service integrates with NXG cart for train orders. This was a backend optimisation: the customer flow stays the same, the plumbing underneath got simpler and faster.
 
 ## Impact
 
-- Boosted the IRCTC flow conversion rate by an impressive **230 bps**.
-- Unlocked a massive new acquisition channel via Zomato, driving a **25%** growth in overall train order volume and expanding the brand footprint nationwide.
+- Train ordering flow conversion up **230 bps**.
+- Train order volume up **25%**, with Zomato as a new channel.

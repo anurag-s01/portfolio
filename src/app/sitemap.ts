@@ -1,31 +1,25 @@
 import { getPosts } from '@/app/utils/utils'
-import { baseURL } from '@/app/resources'
+import { baseURL, routes as enabledRoutes } from '@/app/resources'
 import { routing } from '@/i18n/routing'
 
 export default async function sitemap() {
 
     const locales = routing.locales;
 
-    let blogs = locales.flatMap((locale) => 
-        getPosts(['src', 'app', '[locale]', 'blog', 'posts', locale]).map((post) => ({
-            url: `${baseURL}/${locale}/blog/${post.slug}`,
-            lastModified: post.metadata.publishedAt,
-        }))
-    );
-
     let works = locales.flatMap((locale) => 
         getPosts(['src', 'app', '[locale]', 'work', 'projects', locale]).map((post) => ({
-            url: `${baseURL}/${locale}/work/${post.slug}`,
+            url: `https://${baseURL}/work/${post.slug}`,
             lastModified: post.metadata.publishedAt,
         }))
     );
 
+    // Only routes switched on in config.js, so disabled pages (e.g. blog) stay out of search.
     let routes = locales.flatMap((locale)=> 
-        ['', '/blog', '/work'].map((route) => ({
-            url: `${baseURL}/${locale}${route}`,
+        Object.entries(enabledRoutes).filter(([, on]) => on).map(([route]) => ({
+            url: `https://${baseURL}${route === '/' ? '' : route}`,
             lastModified: new Date().toISOString().split('T')[0],
         }))
     );
 
-    return [...routes, ...blogs, ...works]
+    return [...routes, ...works]
 }

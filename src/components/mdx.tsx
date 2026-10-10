@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react';
 import { SmartImage, SmartLink, Text, Badge, Flex } from '@/once-ui/components';
 import { CodeBlock } from '@/once-ui/modules';
 import { HeadingLink, Terminal } from '@/components';
+import { ProjectVisual } from '@/components/motion/ProjectVisual';
 
 import { TextProps } from '@/once-ui/interfaces';
 import { SmartImageProps } from '@/once-ui/components/SmartImage';
@@ -122,8 +123,15 @@ function createParagraph({ children }: TextProps) {
     );
 };
 
+// Fenced code (```Title.js) renders as a Terminal window titled by the info string.
+function createPre({ children }: { children: React.ReactElement<{ className?: string; children: ReactNode }> }) {
+    const title = children.props.className?.replace('language-', '');
+    return <Terminal title={title || 'Terminal'}>{children.props.children}</Terminal>;
+}
+
 const components = {
     p: createParagraph as any,
+    pre: createPre as any,
     h1: createHeading(1) as any,
     h2: createHeading(2) as any,
     h3: createHeading(3) as any,
@@ -137,7 +145,8 @@ const components = {
     Terminal,
     Badge,
     Flex,
-    SmartImage
+    SmartImage,
+    ProjectVisual
 };
 
 type CustomMDXProps = MDXRemoteProps & {

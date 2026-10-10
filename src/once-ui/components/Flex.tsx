@@ -16,7 +16,7 @@ interface ComponentProps extends
     ConditionalProps {}
 
 const Flex = forwardRef<HTMLDivElement, ComponentProps>(({
-    as: Component = 'div',
+    as = 'div',
     direction,
     justifyContent,
     alignItems,
@@ -182,6 +182,9 @@ const Flex = forwardRef<HTMLDivElement, ComponentProps>(({
         textAlign: align,
         ...style,
     };
+
+    // Typed as 'div' so react-three's JSX elements don't widen the props union to never.
+    const Component = as as 'div';
 
     return (
         <Component

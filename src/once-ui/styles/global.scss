@@ -94,3 +94,55 @@ a {
         min-height: 50px;
     }
 }
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success-solid-strong, #3ecf8e);
+    box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.6);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    70% { box-shadow: 0 0 0 8px rgba(62, 207, 142, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(62, 207, 142, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pulse-dot { animation: none; }
+}
+
+// Long words/numbers (e.g. "29.4→5.8ms", URLs) wrap instead of overflowing narrow screens.
+body {
+    overflow-wrap: break-word;
+    // Lock the horizontal axis: on phones nothing can drag the page sideways.
+    overflow-x: hidden;
+}
+
+// Smooth in-page jumps (e.g. "Get in touch" → #contact), unless the visitor prefers reduced motion.
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+
+// Headings and labels use the same family as body text (one typeface, set by weight and tracking).
+:root {
+    --font-secondary: var(--font-primary);
+    --font-tertiary: var(--font-primary);
+}
+
+// Display type: medium weight, tight tracking, balanced lines, instead of default bold.
+.font-display {
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+
+    &.font-strong, & > .font-strong {
+        font-weight: 560;
+    }
+}
+
+.font-heading {
+    letter-spacing: -0.015em;
+}

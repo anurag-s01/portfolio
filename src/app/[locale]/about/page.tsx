@@ -3,11 +3,9 @@ import {
   Avatar,
   Button,
   Flex,
-  Grid,
   Heading,
   Icon,
   IconButton,
-  SmartImage,
   Tag,
   Text,
 } from "@/once-ui/components";
@@ -17,6 +15,9 @@ import styles from "@/components/about/about.module.scss";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { iconLibrary } from "@/once-ui/icons";
+import { FadeHint, Reveal, ScrollLine, TimelineDot } from "@/components/motion/primitives";
+import { TitleBand } from "@/components/backgrounds/PageBackdrop";
+import { SkillOrbit } from "@/components/about/SkillOrbit";
 
 export async function generateMetadata(
   props: {
@@ -38,11 +39,12 @@ export async function generateMetadata(
   return {
     title,
     description,
+    alternates: { canonical: `https://${baseURL}/about` },
     openGraph: {
       title,
       description,
       type: "website",
-      url: `https://${baseURL}/${locale}/about`,
+      url: `https://${baseURL}/about`,
       images: [
         {
           url: ogImage,
@@ -86,7 +88,7 @@ export default function About(
     {
       title: about.work.title,
       display: about.work.display,
-      items: about.work.experiences.map((experience) => experience.company),
+      items: [...new Set(about.work.experiences.map((experience) => experience.company))],
     },
     {
       title: about.studies.title,
@@ -112,7 +114,7 @@ export default function About(
             jobTitle: person.role,
             description: about.intro.description,
             url: `https://${baseURL}/about`,
-            image: `${baseURL}/images/${person.avatar}`,
+            image: `https://${baseURL}${person.avatar}`,
             sameAs: social
               .filter((item) => item.link && !item.link.startsWith("mailto:")) // Filter out empty links and email links
               .map((item) => item.link),
@@ -205,6 +207,7 @@ export default function About(
                 />
               </Flex>
             )}
+            <TitleBand>
             <Heading className={styles.textAlign} variant="display-strong-xl">
               {person.name}
             </Heading>
@@ -215,6 +218,7 @@ export default function About(
             >
               {person.role}
             </Text>
+            </TitleBand>
             {social.length > 0 && (
               <Flex
                 className={styles.blockAlign}
@@ -262,21 +266,26 @@ export default function About(
               >
                 {about.work.title}
               </Heading>
-              <Flex direction="column" fillWidth gap="l" marginBottom="40">
+              <ScrollLine>
+              <Flex direction="column" fillWidth gap="xl" marginBottom="40">
                 {about.work.experiences.map((experience, index) => (
+                  <Reveal key={`${experience.company}-${experience.role}-${index}`}>
                   <Flex
-                    key={`${experience.company}-${experience.role}-${index}`}
                     fillWidth
                     direction="column"
+                    style={{ position: "relative" }}
                   >
+                    <TimelineDot />
                     <Flex
                       fillWidth
                       justifyContent="space-between"
                       alignItems="flex-end"
                       marginBottom="4"
+                      gap="m"
+                      wrap
                     >
-                      <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company}
+                      <Text id={about.work.experiences[index - 1]?.company !== experience.company ? experience.company : undefined} variant="heading-strong-l">
+                        {experience.role}
                       </Text>
                       <Text
                         variant="heading-default-xs"
@@ -290,14 +299,15 @@ export default function About(
                       onBackground="brand-weak"
                       marginBottom="m"
                     >
-                      {experience.role}
+                      {experience.company}
                     </Text>
                     <Flex as="ul" direction="column" gap="16">
                       {experience.achievements.map(
-                        (achievement: string, index: any) => (
+                        (achievement: React.ReactNode, index: number) => (
                           <Text
                             as="li"
                             variant="body-default-m"
+                            onBackground="neutral-medium"
                             key={`${experience.company}-${index}`}
                           >
                             {achievement}
@@ -305,29 +315,36 @@ export default function About(
                         )
                       )}
                     </Flex>
-                    {experience.images.length > 0 && (
-                      <Flex fillWidth paddingTop="m" paddingLeft="40" wrap>
-                        {experience.images.map((image, index) => (
-                          <Flex
-                            key={index}
-                            border="neutral-medium"
-                            borderStyle="solid-1"
-                            radius="m"
-                            minWidth={image.width}
-                            height={image.height}
-                          >
-                            <SmartImage
-                              enlarge
-                              radius="m"
-                              sizes={image.width.toString()}
-                              alt={image.alt}
-                              src={image.src}
-                            />
-                          </Flex>
-                        ))}
-                      </Flex>
-                    )}
                   </Flex>
+                  </Reveal>
+                ))}
+              </Flex>
+              </ScrollLine>
+            </>
+          )}
+
+          {about.studies.display && (
+            <>
+              <Heading
+                as="h2"
+                id={about.studies.title}
+                variant="display-strong-s"
+                marginBottom="m"
+              >
+                {about.studies.title}
+              </Heading>
+              <Flex direction="column" fillWidth gap="l" marginBottom="40">
+                {about.studies.institutions.map((institution) => (
+                  <Reveal key={institution.name}>
+                    <Flex fillWidth direction="column" gap="4">
+                      <Text id={institution.name} variant="heading-strong-l">
+                        {institution.name}
+                      </Text>
+                      <Text variant="heading-default-xs" onBackground="neutral-weak">
+                        {institution.description}
+                      </Text>
+                    </Flex>
+                  </Reveal>
                 ))}
               </Flex>
             </>
@@ -335,42 +352,16 @@ export default function About(
 
           {about.technical.display && (
             <>
-              <Heading
-                as="h2"
-                id={about.technical.title}
-                variant="display-strong-s"
-                marginBottom="40"
-              >
-                {about.technical.title}
-              </Heading>
-              <Grid
-                columns="repeat(4, 1fr)"
-                tabletColumns="3col"
-                mobileColumns="2col"
-                gap="m"
-                fillWidth
-              >
-                {about.technical.skills.map((skill, index) => (
-                  <Flex
-                    key={`${skill.title}-${index}`}
-                    className={styles.techCard}
-                    border="neutral-medium"
-                    borderStyle="solid-1"
-                    radius="l"
-                    padding="m"
-                    direction="column"
-                    alignItems="center"
-                    background="surface"
-                    alpha="neutral-weak"
-                    gap="12"
-                  >
-                    <Icon name={skill.icon} size="l" />
-                    <Text variant="body-default-m">
-                      {skill.title}
-                    </Text>
-                  </Flex>
-                ))}
-              </Grid>
+              <SkillOrbit skills={about.technical.skills}>
+                <Heading as="h2" id={about.technical.title} variant="display-strong-s">
+                  {about.technical.title}
+                </Heading>
+                <FadeHint seconds={3}>
+                  <Text variant="body-default-s" onBackground="neutral-weak" marginTop="8">
+                    Hover or tap an orb to see what it is.
+                  </Text>
+                </FadeHint>
+              </SkillOrbit>
             </>
           )}
         </Flex>

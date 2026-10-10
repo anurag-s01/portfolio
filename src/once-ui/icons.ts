@@ -47,7 +47,11 @@ import {
 	SiApachekafka,
 	SiAerospike,
 	SiMongodb,
-	SiRabbitmq
+	SiRabbitmq,
+	SiElasticsearch,
+	SiGrafana,
+	SiDatadog,
+	SiSpring
 } from "react-icons/si";
 
 import {
@@ -89,6 +93,10 @@ export const iconLibrary: Record<string, IconType> = {
 	mysql: TbBrandMysql,
 	mongoDB: SiMongodb,
 	rabbitmq: SiRabbitmq,
+	elasticsearch: SiElasticsearch,
+	grafana: SiGrafana,
+	datadog: SiDatadog,
+	spring: SiSpring,
 	java: FaJava,
 	aws: FaAws,
 	git: FaGitAlt,

@@ -1,13 +1,16 @@
 import { use } from "react";
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { CustomMDX } from '@/components/mdx'
 import { getPosts } from '@/app/utils/utils'
-import { AvatarGroup, Button, Flex, Heading, SmartImage, Text } from '@/once-ui/components'
+import { Button, Flex, Heading, SmartImage, Tag, Text } from '@/once-ui/components'
+import { ProjectVisual } from '@/components/motion/ProjectVisual';
+import { Reveal } from '@/components/motion/primitives';
+import { TitleBand } from '@/components/backgrounds/PageBackdrop';
 import { baseURL, renderContent } from '@/app/resources';
 import { routing } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
-import { formatDate } from '@/app/utils/formatDate';
 
 interface WorkParams {
     params: Promise<{
@@ -65,12 +68,13 @@ export async function generateMetadata(props: WorkParams) {
 		description,
 		images,
 		team,
+		alternates: { canonical: `https://${baseURL}/work/${post.slug}` },
 		openGraph: {
 			title,
 			description,
 			type: 'article',
 			publishedTime,
-			url: `https://${baseURL}/${locale}/work/${post.slug}`,
+			url: `https://${baseURL}/work/${post.slug}`,
 			images: [
 				{
 					url: ogImage,
@@ -89,18 +93,19 @@ export async function generateMetadata(props: WorkParams) {
 export default function Project(props: WorkParams) {
     const params = use(props.params);
     setRequestLocale(params.locale);
-    let post = getPosts(['src', 'app', '[locale]', 'work', 'projects', params.locale]).find((post) => post.slug === params.slug)
+    const posts = getPosts(['src', 'app', '[locale]', 'work', 'projects', params.locale])
+        .sort((a, b) => new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime());
+    const index = posts.findIndex((post) => post.slug === params.slug);
+    const post = posts[index];
 
     if (!post) {
 		notFound()
 	}
 
+    const next = posts[(index + 1) % posts.length];
+
     const t = useTranslations();
     const { person } = renderContent(t);
-
-    const avatars = post.metadata.team?.map((person) => ({
-        src: person.avatar,
-    })) || [];
 
     return (
 		<Flex as="section"
@@ -121,7 +126,7 @@ export default function Project(props: WorkParams) {
 						image: post.metadata.image
 							? `https://${baseURL}${post.metadata.image}`
 							: `https://${baseURL}/og?title=${post.metadata.title}`,
-							url: `https://${baseURL}/${params.locale}/work/${post.slug}`,
+							url: `https://${baseURL}/work/${post.slug}`,
 						author: {
 							'@type': 'Person',
 							name: person.name,
@@ -129,9 +134,10 @@ export default function Project(props: WorkParams) {
 					}),
 				}}
 			/>
+			<TitleBand>
 			<Flex
 				fillWidth maxWidth="xs" gap="16"
-				direction="column">
+				direction="column" style={{ margin: '0 auto' }}>
 				<Button
 					href={`/${params.locale}/work`}
 					variant="tertiary"
@@ -139,38 +145,62 @@ export default function Project(props: WorkParams) {
 					prefixIcon="chevronLeft">
 					Projects
 				</Button>
+				{post.metadata.period && (
+					<Text variant="label-default-s" onBackground="brand-weak">
+						{post.metadata.period}
+					</Text>
+				)}
 				<Heading
 					variant="display-strong-s">
 					{post.metadata.title}
 				</Heading>
+				<Text variant="body-default-l" onBackground="neutral-weak">
+					{post.metadata.summary}
+				</Text>
 			</Flex>
-			{post.metadata.images.length > 0 && (
-				<SmartImage
-					aspectRatio="16 / 9"
-					radius="m"
-					alt="image"
-					src={post.metadata.images[0]}/>
-			)}
+			</TitleBand>
+			<Reveal>
+				{post.metadata.visual
+					? <ProjectVisual visual={post.metadata.visual} />
+					: post.metadata.images.length > 0 && (
+						<SmartImage
+							aspectRatio="16 / 9"
+							radius="m"
+							alt="image"
+							src={post.metadata.images[0]}/>
+					)}
+			</Reveal>
 			<Flex style={{margin: 'auto'}}
 				as="article"
 				maxWidth="xs" fillWidth
 				direction="column">
-				<Flex
-					gap="12" marginBottom="24"
-					alignItems="center">
-					{ post.metadata.team && (
-						<AvatarGroup
-							reverseOrder
-							avatars={avatars}
-							size="m"/>
-					)}
-					<Text
-						variant="body-default-s"
-						onBackground="neutral-weak">
-						{formatDate(post.metadata.publishedAt)}
-					</Text>
-				</Flex>
+				{post.metadata.metrics.length > 0 && (
+					<Flex gap="32" wrap marginBottom="16">
+						{post.metadata.metrics.map((m) => (
+							<Flex key={m.label} direction="column">
+								<Text variant="heading-strong-xl" onBackground="brand-medium">{m.value}</Text>
+								<Text variant="body-default-s" onBackground="neutral-weak">{m.label}</Text>
+							</Flex>
+						))}
+					</Flex>
+				)}
+				{post.metadata.stack.length > 0 && (
+					<Flex gap="8" wrap marginBottom="24">
+						{post.metadata.stack.map((item) => <Tag key={item} size="m">{item}</Tag>)}
+					</Flex>
+				)}
 				<CustomMDX source={post.content} />
+				<Reveal>
+					<Link href={`/work/${next.slug}`} style={{ textDecoration: 'none', display: 'block', marginTop: 'var(--static-space-40)' }}>
+					<Flex
+						fillWidth direction="column" gap="4" padding="l" radius="l"
+						border="neutral-medium" borderStyle="solid-1" background="surface">
+						<Text variant="label-default-s" onBackground="neutral-weak">Next project</Text>
+						<Text variant="heading-strong-l">{next.metadata.title}</Text>
+						<Text variant="body-default-s" onBackground="neutral-weak">{next.metadata.summary}</Text>
+					</Flex>
+					</Link>
+				</Reveal>
 			</Flex>
 		</Flex>
 	)
