@@ -67,7 +67,23 @@ export default function Home(props: { params: Promise<{ locale: string }> }) {
 				type="application/ld+json"
 				suppressHydrationWarning
 				dangerouslySetInnerHTML={{
-					__html: JSON.stringify({
+					__html: JSON.stringify([{
+						// Tells Google the site name; without it a *.vercel.app site shows as "Vercel".
+						'@context': 'https://schema.org',
+						'@type': 'WebSite',
+						name: person.name,
+						alternateName: [`${person.name} Portfolio`, 'anuragsinghdev'],
+						url: `https://${baseURL}/`,
+					}, {
+						'@context': 'https://schema.org',
+						'@type': 'Person',
+						name: person.name,
+						jobTitle: person.role,
+						worksFor: { '@type': 'Organization', name: 'Jubilant FoodWorks' },
+						url: `https://${baseURL}/`,
+						image: `https://${baseURL}${person.avatar}`,
+						sameAs: social.filter((s) => s.icon !== 'email').map((s) => s.link),
+					}, {
 						'@context': 'https://schema.org',
 						'@type': 'WebPage',
 						name: home.title,
@@ -82,7 +98,7 @@ export default function Home(props: { params: Promise<{ locale: string }> }) {
 								url: `https://${baseURL}${person.avatar}`,
 							},
 						},
-					}),
+					}]),
 				}}
 			/>
 			<LiquidMetalHero>
