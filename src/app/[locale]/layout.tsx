@@ -43,7 +43,7 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 			title: `${person.firstName}'s Portfolio`,
 			description: home.description,
 			url: `https://${baseURL}`,
-			siteName: `${person.firstName}'s Portfolio`,
+			siteName: person.name,
 			locale: 'en_US',
 			type: 'website',
 		},
