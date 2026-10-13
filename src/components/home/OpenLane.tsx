@@ -23,16 +23,31 @@ export function OpenLane({ email, linkedin }: { email: string; linkedin: string 
     const [copied, setCopied] = useState(false);
     const [cert, setCert] = useState<string | null>(null);
     const mail = (subject: string) => `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+    // mailto: silently does nothing when no mail app is registered. If the page still has
+    // focus shortly after the click, nothing opened, so fall back to Gmail's web composer.
+    const onMail = (subject: string) => () => {
+        setTimeout(() => {
+            if (document.hasFocus()) window.open(`https://mail.google.com/mail/?view=cm&to=${email}&su=${encodeURIComponent(subject)}`, "_blank", "noopener");
+        }, 700);
+    };
 
 
     const copy = async () => {
         try {
             await navigator.clipboard.writeText(email);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1800);
         } catch {
-            window.location.href = mail("Hello");
+            // Clipboard API can be blocked (permissions, embedded views, older Safari): use the legacy path.
+            const t = document.createElement("textarea");
+            t.value = email;
+            t.setAttribute("readonly", "");
+            t.style.cssText = "position:fixed;opacity:0";
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand("copy");
+            t.remove();
         }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
     };
 
     const rise = (i: number) => ({
@@ -60,7 +75,7 @@ export function OpenLane({ email, linkedin }: { email: string; linkedin: string 
                 </motion.p>
 
                 <motion.div className={styles.actions} {...rise(3)}>
-                    <a className={styles.primary} href={mail("Hello, Anurag")}>
+                    <a className={styles.primary} href={mail("Hello, Anurag")} onClick={onMail("Hello, Anurag")}>
                         <PiEnvelopeSimple aria-hidden /> Write to me
                     </a>
                     <button type="button" className={styles.copy} onClick={copy} aria-label={copied ? "Email copied" : `Copy ${email}`}>
@@ -74,12 +89,12 @@ export function OpenLane({ email, linkedin }: { email: string; linkedin: string 
                 </motion.div>
 
                 <div className={styles.tiles}>
-                    <motion.a className={styles.tile} href={mail("Coffee?")} {...rise(4)}>
+                    <motion.a className={styles.tile} href={mail("Coffee?")} onClick={onMail("Coffee?")} {...rise(4)}>
                         <PiCoffee className={styles.tileIcon} aria-hidden />
                         <strong>Coffee</strong>
                         <span>Thirty minutes. Your questions, my order.</span>
                     </motion.a>
-                    <motion.a className={styles.tile} href={mail("Table tennis?")} {...rise(5)}>
+                    <motion.a className={styles.tile} href={mail("Table tennis?")} onClick={onMail("Table tennis?")} {...rise(5)}>
                         <PiPingPong className={styles.tileIcon} aria-hidden />
                         <strong>Table tennis</strong>
                         <span>Best of five. Loser buys the coffee.</span>
