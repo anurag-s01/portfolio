@@ -35,11 +35,19 @@ export function OpenLane({ email, linkedin }: { email: string; linkedin: string 
     const copy = async () => {
         try {
             await navigator.clipboard.writeText(email);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1800);
         } catch {
-            window.location.href = mail("Hello");
+            // Clipboard API can be blocked (permissions, embedded views, older Safari): use the legacy path.
+            const t = document.createElement("textarea");
+            t.value = email;
+            t.setAttribute("readonly", "");
+            t.style.cssText = "position:fixed;opacity:0";
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand("copy");
+            t.remove();
         }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
     };
 
     const rise = (i: number) => ({
